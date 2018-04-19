@@ -1,18 +1,19 @@
 {
-  "name": "simple-markdown",
-  "version": "0.3.3",
-  "description": "Javascript markdown parsing, made simple",
-  "main": "simple-markdown.js",
+  "name": "markdown-tg",
+  "version": "0.1.0",
+  "description": "Javascript Telegram markdown parsing, made simple",
+  "main": "markdown-tg.js",
   "scripts": {
     "test": "make test && size-limit",
     "size": "size-limit"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Khan/simple-markdown.git"
+    "url": "https://github.com/xen/markdown-tg.git"
   },
   "keywords": [
     "markdown",
+    "telegram",
     "simple",
     "react",
     "html",
@@ -20,12 +21,12 @@
     "markup",
     "text processing"
   ],
-  "author": "Khan Academy",
+  "author": "Mikhail Kashkin",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Khan/simple-markdown/issues"
+    "url": "https://github.com/xen/markdown-tg/issues"
   },
-  "homepage": "https://github.com/Khan/simple-markdown",
+  "homepage": "https://github.com/xen/markdown-tg",
   "devDependencies": {
     "mocha": "^2.5.3",
     "react": "^16.1.0",
@@ -36,7 +37,7 @@
   },
   "size-limit": [
     {
-      "path": "simple-markdown.js",
+      "path": "markdown-tg.js",
       "limit": "4 KB"
     }
   ]

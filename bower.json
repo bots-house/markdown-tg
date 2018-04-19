@@ -1,13 +1,14 @@
 {
-  "name": "simple-markdown",
-  "description": "Javascript markdown parsing, made simple",
-  "main": "simple-markdown.js",
+  "name": "markdown-tg",
+  "description": "Javascript Telegram markdown parsing, made simple",
+  "main": "markdown-tg.js",
   "authors": [
-    "Khan Academy"
+    "Mikhail Kashkin"
   ],
   "license": "MIT",
   "keywords": [
     "markdown",
+    "telegram",
     "simple",
     "react",
     "html",
@@ -16,7 +17,7 @@
     "text",
     "processing"
   ],
-  "homepage": "https://github.com/Khan/simple-markdown",
+  "homepage": "https://github.com/xen/markdown-tg",
   "ignore": [
     "**/.*",
     "node_modules",
