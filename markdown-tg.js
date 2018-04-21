@@ -1375,7 +1375,7 @@
     var defaultReactOutput = reactFor(ruleOutput(defaultRules, "react"));
     var defaultHtmlOutput = htmlFor(ruleOutput(defaultRules, "html"));
 
-    var SimpleMarkdown = {
+    var markdownTg = {
         defaultRules: defaultRules,
         parserFor: parserFor,
         ruleOutput: ruleOutput,
@@ -1407,11 +1407,11 @@
     };
 
     if (typeof module !== "undefined" && module.exports) {
-        module.exports = SimpleMarkdown;
+        module.exports = markdownTg;
     } else if (typeof global !== "undefined") {
-        global.SimpleMarkdown = SimpleMarkdown;
+        global.markdownTg = markdownTg;
     } else {
-        window.SimpleMarkdown = SimpleMarkdown;
+        window.markdownTg = markdownTg;
     }
 
 })();
