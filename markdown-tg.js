@@ -697,7 +697,7 @@
             }
         },
         fence: {
-            match: blockRegex(/^ *(`{3,}|~{3,}) *(\S+)? *\n([\s\S]+?)\s*\1 *(?:\n *)+\n/),
+            match: blockRegex(/^ *(`{3,}) *(\S+)? *\n([\s\S]+?)\s*\1 *(?:\n *)+\n/),
             parse: function (capture, parse, state) {
                 return {
                     type: "codeBlock",
@@ -1220,7 +1220,7 @@
             }
         },
         strong: {
-            match: inlineRegex(/^\*\*([\s\S]+?)\*\*(?!\*)/),
+            match: inlineRegex(/^\*([\s\S]+?)\*(?!\*)/),
             quality: function (capture) {
                 // precedence by length, wins ties vs `u`:
                 return capture[0].length + 0.1;

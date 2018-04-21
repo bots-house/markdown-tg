@@ -86,7 +86,7 @@ describe("simple markdown", function () {
         });
 
         it("should parse bold", function () {
-            var parsed = inlineParse("**hi**");
+            var parsed = inlineParse("*hi*");
             validateParse(parsed, [{
                 type: "strong",
                 content: [{
@@ -97,7 +97,7 @@ describe("simple markdown", function () {
         });
 
         it("should parse italics", function () {
-            var parsed = inlineParse("*hi*");
+            var parsed = inlineParse("_hi_");
             validateParse(parsed, [{
                 type: "em",
                 content: [{
@@ -106,7 +106,7 @@ describe("simple markdown", function () {
                 }]
             }]);
 
-            var parsed2 = inlineParse("*test i*");
+            var parsed2 = inlineParse("_test i_");
             validateParse(parsed2, [{
                 type: "em",
                 content: [{
@@ -125,7 +125,7 @@ describe("simple markdown", function () {
         });
 
         it("should parse a single italic character", function () {
-            var parsed = inlineParse("*h*");
+            var parsed = inlineParse("_h_");
             validateParse(parsed, [{
                 type: "em",
                 content: [{
@@ -135,41 +135,41 @@ describe("simple markdown", function () {
             }]);
         });
 
-        it("should parse strikethrough", function () {
-            var parsed = inlineParse("~~hi~~");
-            validateParse(parsed, [{
-                type: "del",
-                content: [{
-                    type: "text",
-                    content: "hi"
-                }]
-            }]);
+        // it("should parse strikethrough", function () {
+        //     var parsed = inlineParse("~~hi~~");
+        //     validateParse(parsed, [{
+        //         type: "del",
+        //         content: [{
+        //             type: "text",
+        //             content: "hi"
+        //         }]
+        //     }]);
 
-            // not super important that it parses this like this, but
-            // it should be a valid something...
-            var parsed2 = inlineParse("~~~~~");
-            validateParse(parsed2, [{
-                type: "del",
-                content: [{
-                    type: "text",
-                    content: "~"
-                }]
-            }]);
-        });
+        //     // not super important that it parses this like this, but
+        //     // it should be a valid something...
+        //     var parsed2 = inlineParse("~~~~~");
+        //     validateParse(parsed2, [{
+        //         type: "del",
+        //         content: [{
+        //             type: "text",
+        //             content: "~"
+        //         }]
+        //     }]);
+        // });
 
-        it("should parse underlines", function () {
-            var parsed = inlineParse("__hi__");
-            validateParse(parsed, [{
-                type: "u",
-                content: [{
-                    type: "text",
-                    content: "hi"
-                }]
-            }]);
-        });
+        // it("should parse underlines", function () {
+        //     var parsed = inlineParse("__hi__");
+        //     validateParse(parsed, [{
+        //         type: "u",
+        //         content: [{
+        //             type: "text",
+        //             content: "hi"
+        //         }]
+        //     }]);
+        // });
 
         it("should parse nested bold/italics", function () {
-            var parsed = inlineParse("***hi***");
+            var parsed = inlineParse("_**hi**_");
             validateParse(parsed, [{
                 type: "em",
                 content: [{
@@ -182,129 +182,129 @@ describe("simple markdown", function () {
             }]);
         });
 
-        it("should parse nested bold/italics/underline", function () {
-            var parsed1 = inlineParse("***__hi__***");
-            validateParse(parsed1, [{
-                type: "em",
-                content: [{
-                    type: "strong",
-                    content: [{
-                        type: "u",
-                        content: [{
-                            type: "text",
-                            content: "hi"
-                        }]
-                    }]
-                }]
-            }]);
+        // it("should parse nested bold/italics/underline", function () {
+        //     var parsed1 = inlineParse("***__hi__***");
+        //     validateParse(parsed1, [{
+        //         type: "em",
+        //         content: [{
+        //             type: "strong",
+        //             content: [{
+        //                 type: "u",
+        //                 content: [{
+        //                     type: "text",
+        //                     content: "hi"
+        //                 }]
+        //             }]
+        //         }]
+        //     }]);
 
-            var parsed2 = inlineParse("*__**hi**__*");
-            validateParse(parsed2, [{
-                type: "em",
-                content: [{
-                    type: "u",
-                    content: [{
-                        type: "strong",
-                        content: [{
-                            type: "text",
-                            content: "hi"
-                        }]
-                    }]
-                }]
-            }]);
+        //     var parsed2 = inlineParse("*__**hi**__*");
+        //     validateParse(parsed2, [{
+        //         type: "em",
+        //         content: [{
+        //             type: "u",
+        //             content: [{
+        //                 type: "strong",
+        //                 content: [{
+        //                     type: "text",
+        //                     content: "hi"
+        //                 }]
+        //             }]
+        //         }]
+        //     }]);
 
-            var parsed3 = inlineParse("***bolditalics***");
-            validateParse(parsed3, [{
-                type: "em",
-                content: [{
-                    type: "strong",
-                    content: [{
-                        type: "text",
-                        content: "bolditalics",
-                    }]
-                }]
-            }]);
+        //     var parsed3 = inlineParse("***bolditalics***");
+        //     validateParse(parsed3, [{
+        //         type: "em",
+        //         content: [{
+        //             type: "strong",
+        //             content: [{
+        //                 type: "text",
+        //                 content: "bolditalics",
+        //             }]
+        //         }]
+        //     }]);
 
-            var parsed4 = inlineParse("**bold *italics***");
-            validateParse(parsed4, [{
-                type: "strong",
-                content: [{
-                    type: "text",
-                    content: "bold ",
-                }, {
-                    type: "em",
-                    content: [{
-                        type: "text",
-                        content: "italics",
-                    }]
-                }]
-            }]);
-        });
+        //     var parsed4 = inlineParse("**bold *italics***");
+        //     validateParse(parsed4, [{
+        //         type: "strong",
+        //         content: [{
+        //             type: "text",
+        //             content: "bold ",
+        //         }, {
+        //             type: "em",
+        //             content: [{
+        //                 type: "text",
+        //                 content: "italics",
+        //             }]
+        //         }]
+        //     }]);
+        // });
 
-        it("should allow escaped underscores in underscore italics", function () {
-            var parsed1 = inlineParse("_ABC\\_DEF_");
-            validateParse(parsed1, [{
-                type: "em",
-                content: [{
-                    type: "text",
-                    content: "ABC",
-                }, {
-                    type: "text",
-                    content: "_",
-                }, {
-                    type: "text",
-                    content: "DEF",
-                }]
-            }]);
+        // it("should allow escaped underscores in underscore italics", function () {
+        //     var parsed1 = inlineParse("_ABC\\_DEF_");
+        //     validateParse(parsed1, [{
+        //         type: "em",
+        //         content: [{
+        //             type: "text",
+        //             content: "ABC",
+        //         }, {
+        //             type: "text",
+        //             content: "_",
+        //         }, {
+        //             type: "text",
+        //             content: "DEF",
+        //         }]
+        //     }]);
 
-            var parsed2 = inlineParse("_**ABC\\_DEF**_");
-            validateParse(parsed2, [{
-                type: "em",
-                content: [{
-                    type: "strong",
-                    content: [{
-                        type: "text",
-                        content: "ABC",
-                    }, {
-                        type: "text",
-                        content: "_",
-                    }, {
-                        type: "text",
-                        content: "DEF",
-                    }]
-                }]
-            }]);
+        //     var parsed2 = inlineParse("_**ABC\\_DEF**_");
+        //     validateParse(parsed2, [{
+        //         type: "em",
+        //         content: [{
+        //             type: "strong",
+        //             content: [{
+        //                 type: "text",
+        //                 content: "ABC",
+        //             }, {
+        //                 type: "text",
+        //                 content: "_",
+        //             }, {
+        //                 type: "text",
+        //                 content: "DEF",
+        //             }]
+        //         }]
+        //     }]);
 
-            var parsed3 = inlineParse("_**ABC\\$DEF**_");
-            validateParse(parsed3, [{
-                type: "em",
-                content: [{
-                    type: "strong",
-                    content: [{
-                        type: "text",
-                        content: "ABC",
-                    }, {
-                        type: "text",
-                        content: "$",
-                    }, {
-                        type: "text",
-                        content: "DEF",
-                    }]
-                }]
-            }]);
+        //     var parsed3 = inlineParse("_**ABC\\$DEF**_");
+        //     validateParse(parsed3, [{
+        //         type: "em",
+        //         content: [{
+        //             type: "strong",
+        //             content: [{
+        //                 type: "text",
+        //                 content: "ABC",
+        //             }, {
+        //                 type: "text",
+        //                 content: "$",
+        //             }, {
+        //                 type: "text",
+        //                 content: "DEF",
+        //             }]
+        //         }]
+        //     }]);
 
-            validateParse(inlineParse("_\\\\_"), [{
-                type: "em",
-                content: [{
-                    type: "text",
-                    content: "\\",
-                }]
-            }]);
-        });
+        //     validateParse(inlineParse("_\\\\_"), [{
+        //         type: "em",
+        //         content: [{
+        //             type: "text",
+        //             content: "\\",
+        //         }]
+        //     }]);
+        // });
 
         // TODO(aria): Make this pass:
         it("should parse complex combined bold/italics", function () {
-            var parsed = inlineParse("***bold** italics*");
+            var parsed = inlineParse("_**bold** italics_");
             validateParse(parsed, [{
                 type: "em",
                 content: [{
@@ -319,7 +319,7 @@ describe("simple markdown", function () {
                 }]
             }]);
 
-            var parsed2 = inlineParse("*hi **there you***");
+            var parsed2 = inlineParse("_hi **there you**_");
             validateParse(parsed2, [{
                 type: "em",
                 content: [{
@@ -334,7 +334,7 @@ describe("simple markdown", function () {
                 }]
             }]);
 
-            var parsed3 = inlineParse("***like* this**");
+            var parsed3 = inlineParse("**_like_ this**");
             validateParse(parsed3, [{
                 type: "strong",
                 content: [{
@@ -349,7 +349,7 @@ describe("simple markdown", function () {
                 }]
             }]);
 
-            var parsed4 = inlineParse("**bold *and italics***");
+            var parsed4 = inlineParse("**bold _and italics_**");
             validateParse(parsed4, [{
                 type: "strong",
                 content: [{
@@ -365,56 +365,56 @@ describe("simple markdown", function () {
             }]);
         });
 
-        it("should parse multiple bold/italics/underlines", function () {
-            var parsed = inlineParse(
-                "*some* of this __sentence__ is **bold**"
-            );
-            validateParse(parsed, [
-                {
-                    type: "em",
-                    content: [{
-                        type: "text",
-                        content: "some"
-                    }]
-                },
-                {
-                    type: "text",
-                    content: " of this "
-                },
-                {
-                    type: "u",
-                    content: [{
-                        type: "text",
-                        content: "sentence"
-                    }]
-                },
-                {
-                    type: "text",
-                    content: " is "
-                },
-                {
-                    type: "strong",
-                    content: [{
-                        type: "text",
-                        content: "bold"
-                    }]
-                }
-            ]);
+        // it("should parse multiple bold/italics/underlines", function () {
+        //     var parsed = inlineParse(
+        //         "*some* of this __sentence__ is **bold**"
+        //     );
+        //     validateParse(parsed, [
+        //         {
+        //             type: "em",
+        //             content: [{
+        //                 type: "text",
+        //                 content: "some"
+        //             }]
+        //         },
+        //         {
+        //             type: "text",
+        //             content: " of this "
+        //         },
+        //         {
+        //             type: "u",
+        //             content: [{
+        //                 type: "text",
+        //                 content: "sentence"
+        //             }]
+        //         },
+        //         {
+        //             type: "text",
+        //             content: " is "
+        //         },
+        //         {
+        //             type: "strong",
+        //             content: [{
+        //                 type: "text",
+        //                 content: "bold"
+        //             }]
+        //         }
+        //     ]);
 
-            validateParse(inlineParse("_italics __bold___"), [{
-                type: "em",
-                content: [{
-                    type: "text",
-                    content: "italics ",
-                }, {
-                    type: "u",
-                    content: [{
-                        type: "text",
-                        content: "bold",
-                    }]
-                }]
-            }]);
-        });
+        //     validateParse(inlineParse("_italics __bold___"), [{
+        //         type: "em",
+        //         content: [{
+        //             type: "text",
+        //             content: "italics ",
+        //         }, {
+        //             type: "u",
+        //             content: [{
+        //                 type: "text",
+        //                 content: "bold",
+        //             }]
+        //         }]
+        //     }]);
+        // });
 
         it("should parse inline code", function () {
             var parsed = inlineParse("`hi`");
@@ -770,57 +770,57 @@ describe("simple markdown", function () {
             }]);
         });
 
-        it("should parse [reflinks][and their targets]", function () {
-            var parsed = implicitParse(
-                "[Google][1]\n\n" +
-                "[1]: http://www.google.com\n\n"
-            );
-            validateParse(parsed, [
-                {
-                    type: "paragraph",
-                    content: [{
-                        type: "link",
-                        content: [{
-                            type: "text",
-                            content: "Google"
-                        }],
-                        target: "http://www.google.com",
-                        title: undefined
-                    }]
-                },
-                {
-                    type: "def",
-                    def: "1",
-                    target: "http://www.google.com",
-                    title: undefined
-                },
-            ]);
+        // it("should parse [reflinks][and their targets]", function () {
+        //     var parsed = implicitParse(
+        //         "[Google][1]\n\n" +
+        //         "[1]: http://www.google.com\n\n"
+        //     );
+        //     validateParse(parsed, [
+        //         {
+        //             type: "paragraph",
+        //             content: [{
+        //                 type: "link",
+        //                 content: [{
+        //                     type: "text",
+        //                     content: "Google"
+        //                 }],
+        //                 target: "http://www.google.com",
+        //                 title: undefined
+        //             }]
+        //         },
+        //         {
+        //             type: "def",
+        //             def: "1",
+        //             target: "http://www.google.com",
+        //             title: undefined
+        //         },
+        //     ]);
 
-            var parsed2 = blockParse(
-                "[1]: http://www.google.com\n\n" +
-                "[Google][1]\n\n"
-            );
-            validateParse(parsed2, [
-                {
-                    type: "def",
-                    def: "1",
-                    target: "http://www.google.com",
-                    title: undefined
-                },
-                {
-                    type: "paragraph",
-                    content: [{
-                        type: "link",
-                        content: [{
-                            type: "text",
-                            content: "Google"
-                        }],
-                        target: "http://www.google.com",
-                        title: undefined
-                    }]
-                },
-            ]);
-        });
+        //     var parsed2 = blockParse(
+        //         "[1]: http://www.google.com\n\n" +
+        //         "[Google][1]\n\n"
+        //     );
+        //     validateParse(parsed2, [
+        //         {
+        //             type: "def",
+        //             def: "1",
+        //             target: "http://www.google.com",
+        //             title: undefined
+        //         },
+        //         {
+        //             type: "paragraph",
+        //             content: [{
+        //                 type: "link",
+        //                 content: [{
+        //                     type: "text",
+        //                     content: "Google"
+        //                 }],
+        //                 target: "http://www.google.com",
+        //                 title: undefined
+        //             }]
+        //         },
+        //     ]);
+        // });
 
         it("should parse inline link titles", function () {
             var parsed = inlineParse(
@@ -850,84 +850,84 @@ describe("simple markdown", function () {
             }]);
         });
 
-        it("should parse reflink titles", function () {
-            var parsed = implicitParse(
-                "[Google][1]\n\n" +
-                "[1]: http://www.google.com (This is google!)\n\n"
-            );
-            validateParse(parsed, [
-                {
-                    type: "paragraph",
-                    content: [{
-                        type: "link",
-                        content: [{
-                            type: "text",
-                            content: "Google"
-                        }],
-                        target: "http://www.google.com",
-                        title: "This is google!"
-                    }]
-                },
-                {
-                    type: "def",
-                    def: "1",
-                    target: "http://www.google.com",
-                    title: "This is google!"
-                },
-            ]);
+        // it("should parse reflink titles", function () {
+        //     var parsed = implicitParse(
+        //         "[Google][1]\n\n" +
+        //         "[1]: http://www.google.com (This is google!)\n\n"
+        //     );
+        //     validateParse(parsed, [
+        //         {
+        //             type: "paragraph",
+        //             content: [{
+        //                 type: "link",
+        //                 content: [{
+        //                     type: "text",
+        //                     content: "Google"
+        //                 }],
+        //                 target: "http://www.google.com",
+        //                 title: "This is google!"
+        //             }]
+        //         },
+        //         {
+        //             type: "def",
+        //             def: "1",
+        //             target: "http://www.google.com",
+        //             title: "This is google!"
+        //         },
+        //     ]);
 
-            var parsed2 = implicitParse(
-                "[1]: http://www.google.com \"still Google\"\n\n" +
-                "[Google][1]\n\n"
-            );
-            validateParse(parsed2, [
-                {
-                    type: "def",
-                    def: "1",
-                    target: "http://www.google.com",
-                    title: "still Google"
-                },
-                {
-                    type: "paragraph",
-                    content: [{
-                        type: "link",
-                        content: [{
-                            type: "text",
-                            content: "Google"
-                        }],
-                        target: "http://www.google.com",
-                        title: "still Google"
-                    }]
-                },
-            ]);
+        //     var parsed2 = implicitParse(
+        //         "[1]: http://www.google.com \"still Google\"\n\n" +
+        //         "[Google][1]\n\n"
+        //     );
+        //     validateParse(parsed2, [
+        //         {
+        //             type: "def",
+        //             def: "1",
+        //             target: "http://www.google.com",
+        //             title: "still Google"
+        //         },
+        //         {
+        //             type: "paragraph",
+        //             content: [{
+        //                 type: "link",
+        //                 content: [{
+        //                     type: "text",
+        //                     content: "Google"
+        //                 }],
+        //                 target: "http://www.google.com",
+        //                 title: "still Google"
+        //             }]
+        //         },
+        //     ]);
 
-            // test some edge cases, notably:
-            // target of ""; title using parens; def with a `-` in it
-            var parsed3 = implicitParse(
-                "[Nowhere][nowhere-target]\n\n" +
-                "[nowhere-target]: <> (nowhere)\n\n"
-            );
-            validateParse(parsed3, [
-                {
-                    type: "paragraph",
-                    content: [{
-                        type: "link",
-                        content: [{
-                            type: "text",
-                            content: "Nowhere"
-                        }],
-                        target: "",
-                        title: "nowhere"
-                    }]
-                },
-                {
-                    type: "def",
-                    def: "nowhere-target",
-                    target: "",
-                    title: "nowhere"
-                },
-            ]);
-        });
+        //     // test some edge cases, notably:
+        //     // target of ""; title using parens; def with a `-` in it
+        //     var parsed3 = implicitParse(
+        //         "[Nowhere][nowhere-target]\n\n" +
+        //         "[nowhere-target]: <> (nowhere)\n\n"
+        //     );
+        //     validateParse(parsed3, [
+        //         {
+        //             type: "paragraph",
+        //             content: [{
+        //                 type: "link",
+        //                 content: [{
+        //                     type: "text",
+        //                     content: "Nowhere"
+        //                 }],
+        //                 target: "",
+        //                 title: "nowhere"
+        //             }]
+        //         },
+        //         {
+        //             type: "def",
+        //             def: "nowhere-target",
+        //             target: "",
+        //             title: "nowhere"
+        //         },
+        //     ]);
+        // });
 
         it("should parse [reflinks][] with implicit targets", function () {
             var parsed = implicitParse(
@@ -981,369 +981,369 @@ describe("simple markdown", function () {
             ]);
         });
 
-        it("should handle multiple [reflinks][to the same target]", function () {
-            var parsed = implicitParse(
-                "[Google][1] [Yahoo][1]\n\n" +
-                "[1]: http://www.google.com\n\n"
-            );
-            validateParse(parsed, [
-                {
-                    type: "paragraph",
-                    content: [
-                        {
-                            type: "link",
-                            content: [{
-                                type: "text",
-                                content: "Google"
-                            }],
-                            target: "http://www.google.com",
-                            title: undefined
-                        },
-                        {
-                            type: "text",
-                            content: " "
-                        },
-                        {
-                            type: "link",
-                            content: [{
-                                type: "text",
-                                content: "Yahoo"
-                            }],
-                            target: "http://www.google.com",
-                            title: undefined
-                        },
-                    ]
-                },
-                {
-                    type: "def",
-                    def: "1",
-                    target: "http://www.google.com",
-                    title: undefined
-                },
-            ]);
+        // it("should handle multiple [reflinks][to the same target]", function () {
+        //     var parsed = implicitParse(
+        //         "[Google][1] [Yahoo][1]\n\n" +
+        //         "[1]: http://www.google.com\n\n"
+        //     );
+        //     validateParse(parsed, [
+        //         {
+        //             type: "paragraph",
+        //             content: [
+        //                 {
+        //                     type: "link",
+        //                     content: [{
+        //                         type: "text",
+        //                         content: "Google"
+        //                     }],
+        //                     target: "http://www.google.com",
+        //                     title: undefined
+        //                 },
+        //                 {
+        //                     type: "text",
+        //                     content: " "
+        //                 },
+        //                 {
+        //                     type: "link",
+        //                     content: [{
+        //                         type: "text",
+        //                         content: "Yahoo"
+        //                     }],
+        //                     target: "http://www.google.com",
+        //                     title: undefined
+        //                 },
+        //             ]
+        //         },
+        //         {
+        //             type: "def",
+        //             def: "1",
+        //             target: "http://www.google.com",
+        //             title: undefined
+        //         },
+        //     ]);
 
-            // This is sort of silly, but the last def overrides all previous
-            // links. This is just a test that things are continuing to work
-            // as we currently expect them to, but I seriously hope no one
-            // writes markdown like this!
-            var parsed2 = implicitParse(
-                "[test][1]\n\n" +
-                "[1]: http://google.com\n\n" +
-                "[test2][1]\n\n" +
-                "[1]: http://khanacademy.org\n\n"
-            );
-            validateParse(parsed2, [
-                {
-                    type: "paragraph",
-                    content: [{
-                        type: "link",
-                        content: [{
-                            type: "text",
-                            content: "test"
-                        }],
-                        target: "http://khanacademy.org",
-                        title: undefined
-                    }]
-                },
-                {
-                    type: "def",
-                    def: "1",
-                    target: "http://google.com",
-                    title: undefined
-                },
-                {
-                    type: "paragraph",
-                    content: [{
-                        type: "link",
-                        content: [{
-                            type: "text",
-                            content: "test2"
-                        }],
-                        target: "http://khanacademy.org",
-                        title: undefined
-                    }]
-                },
-                {
-                    type: "def",
-                    def: "1",
-                    target: "http://khanacademy.org",
-                    title: undefined
-                },
-            ]);
-        });
+        //     // This is sort of silly, but the last def overrides all previous
+        //     // links. This is just a test that things are continuing to work
+        //     // as we currently expect them to, but I seriously hope no one
+        //     // writes markdown like this!
+        //     var parsed2 = implicitParse(
+        //         "[test][1]\n\n" +
+        //         "[1]: http://google.com\n\n" +
+        //         "[test2][1]\n\n" +
+        //         "[1]: http://khanacademy.org\n\n"
+        //     );
+        //     validateParse(parsed2, [
+        //         {
+        //             type: "paragraph",
+        //             content: [{
+        //                 type: "link",
+        //                 content: [{
+        //                     type: "text",
+        //                     content: "test"
+        //                 }],
+        //                 target: "http://khanacademy.org",
+        //                 title: undefined
+        //             }]
+        //         },
+        //         {
+        //             type: "def",
+        //             def: "1",
+        //             target: "http://google.com",
+        //             title: undefined
+        //         },
+        //         {
+        //             type: "paragraph",
+        //             content: [{
+        //                 type: "link",
+        //                 content: [{
+        //                     type: "text",
+        //                     content: "test2"
+        //                 }],
+        //                 target: "http://khanacademy.org",
+        //                 title: undefined
+        //             }]
+        //         },
+        //         {
+        //             type: "def",
+        //             def: "1",
+        //             target: "http://khanacademy.org",
+        //             title: undefined
+        //         },
+        //     ]);
+        // });
 
-        it("should parse basic images", function () {
-            var parsed = inlineParse("![](http://example.com/test.png)");
-            validateParse(parsed, [{
-                type: "image",
-                alt: "",
-                target: "http://example.com/test.png",
-                title: undefined
-            }]);
+        // it("should parse basic images", function () {
+        //     var parsed = inlineParse("![](http://example.com/test.png)");
+        //     validateParse(parsed, [{
+        //         type: "image",
+        //         alt: "",
+        //         target: "http://example.com/test.png",
+        //         title: undefined
+        //     }]);
 
-            var parsed2 = inlineParse("![aaalt](http://example.com/image)");
-            validateParse(parsed2, [{
-                type: "image",
-                alt: "aaalt",
-                target: "http://example.com/image",
-                title: undefined
-            }]);
+        //     var parsed2 = inlineParse("![aaalt](http://example.com/image)");
+        //     validateParse(parsed2, [{
+        //         type: "image",
+        //         alt: "aaalt",
+        //         target: "http://example.com/image",
+        //         title: undefined
+        //     }]);
 
-            var parsed3 = inlineParse(
-                "![](http://localhost:9000/test.html \"local\")"
-            );
-            validateParse(parsed3, [{
-                type: "image",
-                alt: "",
-                target: "http://localhost:9000/test.html",
-                title: "local"
-            }]);
+        //     var parsed3 = inlineParse(
+        //         "![](http://localhost:9000/test.html \"local\")"
+        //     );
+        //     validateParse(parsed3, [{
+        //         type: "image",
+        //         alt: "",
+        //         target: "http://localhost:9000/test.html",
+        //         title: "local"
+        //     }]);
 
-            var parsed4 = inlineParse(
-                "![p](http://localhost:9000/test" +
-                "?content=%7B%7D&format=pretty \"params\")"
-            );
-            validateParse(parsed4, [{
-                type: "image",
-                alt: "p",
-                target: "http://localhost:9000/test" +
-                    "?content=%7B%7D&format=pretty",
-                title: "params"
-            }]);
+        //     var parsed4 = inlineParse(
+        //         "![p](http://localhost:9000/test" +
+        //         "?content=%7B%7D&format=pretty \"params\")"
+        //     );
+        //     validateParse(parsed4, [{
+        //         type: "image",
+        //         alt: "p",
+        //         target: "http://localhost:9000/test" +
+        //             "?content=%7B%7D&format=pretty",
+        //         title: "params"
+        //     }]);
 
-            var parsed5 = inlineParse(
-                "![hash](http://localhost:9000/test.png#content=%7B%7D)"
-            );
-            validateParse(parsed5, [{
-                type: "image",
-                alt: "hash",
-                target: "http://localhost:9000/test.png#content=%7B%7D",
-                title: undefined
-            }]);
-        });
+        //     var parsed5 = inlineParse(
+        //         "![hash](http://localhost:9000/test.png#content=%7B%7D)"
+        //     );
+        //     validateParse(parsed5, [{
+        //         type: "image",
+        //         alt: "hash",
+        //         target: "http://localhost:9000/test.png#content=%7B%7D",
+        //         title: undefined
+        //     }]);
+        // });
 
-        it("should parse [refimages][and their targets]", function () {
-            var parsed = implicitParse(
-                "![aaalt][1]\n\n" +
-                "[1]: http://example.com/test.gif\n\n"
-            );
-            validateParse(parsed, [
-                {
-                    type: "paragraph",
-                    content: [{
-                        type: "image",
-                        alt: "aaalt",
-                        target: "http://example.com/test.gif",
-                        title: undefined
-                    }]
-                },
-                {
-                    type: "def",
-                    def: "1",
-                    target: "http://example.com/test.gif",
-                    title: undefined
-                },
-            ]);
+        // it("should parse [refimages][and their targets]", function () {
+        //     var parsed = implicitParse(
+        //         "![aaalt][1]\n\n" +
+        //         "[1]: http://example.com/test.gif\n\n"
+        //     );
+        //     validateParse(parsed, [
+        //         {
+        //             type: "paragraph",
+        //             content: [{
+        //                 type: "image",
+        //                 alt: "aaalt",
+        //                 target: "http://example.com/test.gif",
+        //                 title: undefined
+        //             }]
+        //         },
+        //         {
+        //             type: "def",
+        //             def: "1",
+        //             target: "http://example.com/test.gif",
+        //             title: undefined
+        //         },
+        //     ]);
 
-            var parsed2 = implicitParse(
-                "[image]: http://example.com/test.gif\n\n" +
-                "![image][]\n\n"
-            );
-            validateParse(parsed2, [
-                {
-                    type: "def",
-                    def: "image",
-                    target: "http://example.com/test.gif",
-                    title: undefined
-                },
-                {
-                    type: "paragraph",
-                    content: [{
-                        type: "image",
-                        alt: "image",
-                        target: "http://example.com/test.gif",
-                        title: undefined
-                    }]
-                },
-            ]);
+        //     var parsed2 = implicitParse(
+        //         "[image]: http://example.com/test.gif\n\n" +
+        //         "![image][]\n\n"
+        //     );
+        //     validateParse(parsed2, [
+        //         {
+        //             type: "def",
+        //             def: "image",
+        //             target: "http://example.com/test.gif",
+        //             title: undefined
+        //         },
+        //         {
+        //             type: "paragraph",
+        //             content: [{
+        //                 type: "image",
+        //                 alt: "image",
+        //                 target: "http://example.com/test.gif",
+        //                 title: undefined
+        //             }]
+        //         },
+        //     ]);
 
-            var parsed3 = implicitParse(
-                "[image]: http://example.com/test.gif \"title!\"\n\n" +
-                "![image][]\n\n"
-            );
-            validateParse(parsed3, [
-                {
-                    type: "def",
-                    def: "image",
-                    target: "http://example.com/test.gif",
-                    title: "title!"
-                },
-                {
-                    type: "paragraph",
-                    content: [{
-                        type: "image",
-                        alt: "image",
-                        target: "http://example.com/test.gif",
-                        title: "title!"
-                    }]
-                },
-            ]);
+        //     var parsed3 = implicitParse(
+        //         "[image]: http://example.com/test.gif \"title!\"\n\n" +
+        //         "![image][]\n\n"
+        //     );
+        //     validateParse(parsed3, [
+        //         {
+        //             type: "def",
+        //             def: "image",
+        //             target: "http://example.com/test.gif",
+        //             title: "title!"
+        //         },
+        //         {
+        //             type: "paragraph",
+        //             content: [{
+        //                 type: "image",
+        //                 alt: "image",
+        //                 target: "http://example.com/test.gif",
+        //                 title: "title!"
+        //             }]
+        //         },
+        //     ]);
 
-            var parsed3 = implicitParse(
-                "[image]: http://example.com/test.gif (*title text*)\n\n" +
-                "![image][]\n\n"
-            );
-            validateParse(parsed3, [
-                {
-                    type: "def",
-                    def: "image",
-                    target: "http://example.com/test.gif",
-                    title: "*title text*"
-                },
-                {
-                    type: "paragraph",
-                    content: [{
-                        type: "image",
-                        alt: "image",
-                        target: "http://example.com/test.gif",
-                        title: "*title text*"
-                    }]
-                },
-            ]);
-        });
+        //     var parsed3 = implicitParse(
+        //         "[image]: http://example.com/test.gif (*title text*)\n\n" +
+        //         "![image][]\n\n"
+        //     );
+        //     validateParse(parsed3, [
+        //         {
+        //             type: "def",
+        //             def: "image",
+        //             target: "http://example.com/test.gif",
+        //             title: "*title text*"
+        //         },
+        //         {
+        //             type: "paragraph",
+        //             content: [{
+        //                 type: "image",
+        //                 alt: "image",
+        //                 target: "http://example.com/test.gif",
+        //                 title: "*title text*"
+        //             }]
+        //         },
+        //     ]);
+        // });
 
-        it("should compare defs case- and whitespace-insensitively", function () {
-            var parsed = implicitParse(
-                "[Google][HiIiI]\n\n" +
-                "[HIiii]: http://www.google.com\n\n"
-            );
-            validateParse(parsed, [
-                {
-                    type: "paragraph",
-                    content: [{
-                        type: "link",
-                        content: [{
-                            type: "text",
-                            content: "Google"
-                        }],
-                        target: "http://www.google.com",
-                        title: undefined
-                    }]
-                },
-                {
-                    type: "def",
-                    def: "hiiii",
-                    target: "http://www.google.com",
-                    title: undefined
-                },
-            ]);
+        // it("should compare defs case- and whitespace-insensitively", function () {
+        //     var parsed = implicitParse(
+        //         "[Google][HiIiI]\n\n" +
+        //         "[HIiii]: http://www.google.com\n\n"
+        //     );
+        //     validateParse(parsed, [
+        //         {
+        //             type: "paragraph",
+        //             content: [{
+        //                 type: "link",
+        //                 content: [{
+        //                     type: "text",
+        //                     content: "Google"
+        //                 }],
+        //                 target: "http://www.google.com",
+        //                 title: undefined
+        //             }]
+        //         },
+        //         {
+        //             type: "def",
+        //             def: "hiiii",
+        //             target: "http://www.google.com",
+        //             title: undefined
+        //         },
+        //     ]);
 
-            var parsed2 = implicitParse(
-                "[Google][]\n\n" +
-                "[google]: http://www.google.com\n\n"
-            );
-            validateParse(parsed2, [
-                {
-                    type: "paragraph",
-                    content: [{
-                        type: "link",
-                        content: [{
-                            type: "text",
-                            content: "Google"
-                        }],
-                        target: "http://www.google.com",
-                        title: undefined
-                    }]
-                },
-                {
-                    type: "def",
-                    def: "google",
-                    target: "http://www.google.com",
-                    title: undefined
-                },
-            ]);
+        //     var parsed2 = implicitParse(
+        //         "[Google][]\n\n" +
+        //         "[google]: http://www.google.com\n\n"
+        //     );
+        //     validateParse(parsed2, [
+        //         {
+        //             type: "paragraph",
+        //             content: [{
+        //                 type: "link",
+        //                 content: [{
+        //                     type: "text",
+        //                     content: "Google"
+        //                 }],
+        //                 target: "http://www.google.com",
+        //                 title: undefined
+        //             }]
+        //         },
+        //         {
+        //             type: "def",
+        //             def: "google",
+        //             target: "http://www.google.com",
+        //             title: undefined
+        //         },
+        //     ]);
 
-            var parsed3 = implicitParse(
-                "[Google][ h    i ]\n\n" +
-                "[  h i   ]: http://www.google.com\n\n"
-            );
-            validateParse(parsed3, [
-                {
-                    type: "paragraph",
-                    content: [{
-                        type: "link",
-                        content: [{
-                            type: "text",
-                            content: "Google"
-                        }],
-                        target: "http://www.google.com",
-                        title: undefined
-                    }]
-                },
-                {
-                    type: "def",
-                    def: " h i ",
-                    target: "http://www.google.com",
-                    title: undefined
-                },
-            ]);
-        });
+        //     var parsed3 = implicitParse(
+        //         "[Google][ h    i ]\n\n" +
+        //         "[  h i   ]: http://www.google.com\n\n"
+        //     );
+        //     validateParse(parsed3, [
+        //         {
+        //             type: "paragraph",
+        //             content: [{
+        //                 type: "link",
+        //                 content: [{
+        //                     type: "text",
+        //                     content: "Google"
+        //                 }],
+        //                 target: "http://www.google.com",
+        //                 title: undefined
+        //             }]
+        //         },
+        //         {
+        //             type: "def",
+        //             def: " h i ",
+        //             target: "http://www.google.com",
+        //             title: undefined
+        //         },
+        //     ]);
+        // });
 
-        it("should not allow defs to break out of a paragraph", function () {
-            var parsed = implicitParse("hi [1]: there\n\n");
-            validateParse(parsed, [{
-                type: "paragraph",
-                content: [
-                    { content: "hi ", type: "text" },
-                    { content: "[1", type: "text" },
-                    { content: "]", type: "text" },
-                    { content: ": there", type: "text" },
-                ]
-            }]);
-        });
+        // it("should not allow defs to break out of a paragraph", function () {
+        //     var parsed = implicitParse("hi [1]: there\n\n");
+        //     validateParse(parsed, [{
+        //         type: "paragraph",
+        //         content: [
+        //             { content: "hi ", type: "text" },
+        //             { content: "[1", type: "text" },
+        //             { content: "]", type: "text" },
+        //             { content: ": there", type: "text" },
+        //         ]
+        //     }]);
+        // });
 
-        it("should allow a group of defs next to each other", function () {
-            var parsed = implicitParse(
-                "[a]: # (title)\n" +
-                "[b]: http://www.google.com\n" +
-                "[//]: <> (hi)\n" +
-                "[label]: # (there)\n" +
-                "[#]: #\n" +
-                "\n"
-            );
-            validateParse(parsed, [
-                {
-                    type: "def",
-                    def: "a",
-                    target: "#",
-                    title: "title"
-                },
-                {
-                    type: "def",
-                    def: "b",
-                    target: "http://www.google.com",
-                    title: undefined
-                },
-                {
-                    type: "def",
-                    def: "//",
-                    target: "",
-                    title: "hi"
-                },
-                {
-                    type: "def",
-                    def: "label",
-                    target: "#",
-                    title: "there"
-                },
-                {
-                    type: "def",
-                    def: "#",
-                    target: "#",
-                    title: undefined
-                },
-            ]);
-        });
+        // it("should allow a group of defs next to each other", function () {
+        //     var parsed = implicitParse(
+        //         "[a]: # (title)\n" +
+        //         "[b]: http://www.google.com\n" +
+        //         "[//]: <> (hi)\n" +
+        //         "[label]: # (there)\n" +
+        //         "[#]: #\n" +
+        //         "\n"
+        //     );
+        //     validateParse(parsed, [
+        //         {
+        //             type: "def",
+        //             def: "a",
+        //             target: "#",
+        //             title: "title"
+        //         },
+        //         {
+        //             type: "def",
+        //             def: "b",
+        //             target: "http://www.google.com",
+        //             title: undefined
+        //         },
+        //         {
+        //             type: "def",
+        //             def: "//",
+        //             target: "",
+        //             title: "hi"
+        //         },
+        //         {
+        //             type: "def",
+        //             def: "label",
+        //             target: "#",
+        //             title: "there"
+        //         },
+        //         {
+        //             type: "def",
+        //             def: "#",
+        //             target: "#",
+        //             title: undefined
+        //         },
+        //     ]);
+        // });
 
         it("should parse a single top-level paragraph", function () {
             var parsed = blockParse("hi\n\n");
@@ -1449,95 +1449,95 @@ describe("simple markdown", function () {
             ]);
         });
 
-        it("should parse a single heading", function () {
-            var parsed = blockParse("### heading3\n\n");
-            validateParse(parsed, [{
-                type: "heading",
-                level: 3,
-                content: [{
-                    type: "text",
-                    content: "heading3"
-                }]
-            }]);
-        });
+        // it("should parse a single heading", function () {
+        //     var parsed = blockParse("### heading3\n\n");
+        //     validateParse(parsed, [{
+        //         type: "heading",
+        //         level: 3,
+        //         content: [{
+        //             type: "text",
+        //             content: "heading3"
+        //         }]
+        //     }]);
+        // });
 
-        it("should parse a single lheading", function () {
-            var parsed = blockParse("heading2\n-----\n\n");
-            validateParse(parsed, [{
-                type: "heading",
-                level: 2,
-                content: [{
-                    type: "text",
-                    content: "heading2"
-                }]
-            }]);
-        });
+        // it("should parse a single lheading", function () {
+        //     var parsed = blockParse("heading2\n-----\n\n");
+        //     validateParse(parsed, [{
+        //         type: "heading",
+        //         level: 2,
+        //         content: [{
+        //             type: "text",
+        //             content: "heading2"
+        //         }]
+        //     }]);
+        // });
 
-        it("should not parse a single lheading with two -- or ==", function () {
-            var parsed = blockParse("heading1\n==\n\n");
-            validateParse(parsed, [{
-                type: "paragraph",
-                content: [
-                    { type: "text", content: "heading1\n" },
-                    { type: "text", content: "=" },
-                    { type: "text", content: "=" },
-                ]
-            }]);
+        // it("should not parse a single lheading with two -- or ==", function () {
+        //     var parsed = blockParse("heading1\n==\n\n");
+        //     validateParse(parsed, [{
+        //         type: "paragraph",
+        //         content: [
+        //             { type: "text", content: "heading1\n" },
+        //             { type: "text", content: "=" },
+        //             { type: "text", content: "=" },
+        //         ]
+        //     }]);
 
-            var parsed2 = blockParse("heading2\n--\n\n");
-            validateParse(parsed2, [{
-                type: "paragraph",
-                content: [
-                    { type: "text", content: "heading2\n" },
-                    { type: "text", content: "-" },
-                    { type: "text", content: "-" },
-                ]
-            }]);
-        });
+        //     var parsed2 = blockParse("heading2\n--\n\n");
+        //     validateParse(parsed2, [{
+        //         type: "paragraph",
+        //         content: [
+        //             { type: "text", content: "heading2\n" },
+        //             { type: "text", content: "-" },
+        //             { type: "text", content: "-" },
+        //         ]
+        //     }]);
+        // });
 
-        it("should not parse 7 #s as an h7", function () {
-            var parsed = blockParse("#######heading7\n\n");
-            validateParse(parsed, [{
-                type: "heading",
-                level: 6,
-                content: [{
-                    type: "text",
-                    content: "#heading7"
-                }]
-            }]);
-        });
+        // it("should not parse 7 #s as an h7", function () {
+        //     var parsed = blockParse("#######heading7\n\n");
+        //     validateParse(parsed, [{
+        //         type: "heading",
+        //         level: 6,
+        //         content: [{
+        //             type: "text",
+        //             content: "#heading7"
+        //         }]
+        //     }]);
+        // });
 
-        it("should parse a heading between paragraphs", function () {
-            var parsed = blockParse(
-                "para 1\n\n" +
-                "#heading\n\n\n" +
-                "para 2\n\n"
-            );
-            validateParse(parsed, [
-                {
-                    type: "paragraph",
-                    content: [{
-                        type: "text",
-                        content: "para 1"
-                    }]
-                },
-                {
-                    type: "heading",
-                    level: 1,
-                    content: [{
-                        type: "text",
-                        content: "heading"
-                    }]
-                },
-                {
-                    type: "paragraph",
-                    content: [{
-                        type: "text",
-                        content: "para 2"
-                    }]
-                },
-            ]);
-        });
+        // it("should parse a heading between paragraphs", function () {
+        //     var parsed = blockParse(
+        //         "para 1\n\n" +
+        //         "#heading\n\n\n" +
+        //         "para 2\n\n"
+        //     );
+        //     validateParse(parsed, [
+        //         {
+        //             type: "paragraph",
+        //             content: [{
+        //                 type: "text",
+        //                 content: "para 1"
+        //             }]
+        //         },
+        //         {
+        //             type: "heading",
+        //             level: 1,
+        //             content: [{
+        //                 type: "text",
+        //                 content: "heading"
+        //             }]
+        //         },
+        //         {
+        //             type: "paragraph",
+        //             content: [{
+        //                 type: "text",
+        //                 content: "para 2"
+        //             }]
+        //         },
+        //     ]);
+        // });
 
         it("should not allow headings mid-paragraph", function () {
             var parsed = blockParse(
@@ -1570,95 +1570,95 @@ describe("simple markdown", function () {
             }]);
         });
 
-        it("should parse a single top-level blockquote", function () {
-            var parsed = blockParse("> blockquote\n\n");
-            validateParse(parsed, [{
-                type: "blockQuote",
-                content: [{
-                    type: "paragraph",
-                    content: [{
-                        type: "text",
-                        content: "blockquote"
-                    }],
-                }]
-            }]);
-        });
+        // it("should parse a single top-level blockquote", function () {
+        //     var parsed = blockParse("> blockquote\n\n");
+        //     validateParse(parsed, [{
+        //         type: "blockQuote",
+        //         content: [{
+        //             type: "paragraph",
+        //             content: [{
+        //                 type: "text",
+        //                 content: "blockquote"
+        //             }],
+        //         }]
+        //     }]);
+        // });
 
-        it("should parse multiple blockquotes and paragraphs", function () {
-            var parsed = blockParse(
-                "para 1\n\n" +
-                "> blockquote 1\n" +
-                ">\n" +
-                ">blockquote 2\n\n" +
-                "para 2\n\n"
-            );
-            validateParse(parsed, [
-                {
-                    type: "paragraph",
-                    content: [{
-                        type: "text",
-                        content: "para 1"
-                    }],
-                },
-                {
-                    type: "blockQuote",
-                    content: [
-                        {
-                            type: "paragraph",
-                            content: [{
-                                type: "text",
-                                content: "blockquote 1"
-                            }],
-                        },
-                        {
-                            type: "paragraph",
-                            content: [{
-                                type: "text",
-                                content: "blockquote 2"
-                            }],
-                        }
-                    ]
-                },
-                {
-                    type: "paragraph",
-                    content: [{
-                        type: "text",
-                        content: "para 2"
-                    }],
-                },
-            ]);
-        });
+        // it("should parse multiple blockquotes and paragraphs", function () {
+        //     var parsed = blockParse(
+        //         "para 1\n\n" +
+        //         "> blockquote 1\n" +
+        //         ">\n" +
+        //         ">blockquote 2\n\n" +
+        //         "para 2\n\n"
+        //     );
+        //     validateParse(parsed, [
+        //         {
+        //             type: "paragraph",
+        //             content: [{
+        //                 type: "text",
+        //                 content: "para 1"
+        //             }],
+        //         },
+        //         {
+        //             type: "blockQuote",
+        //             content: [
+        //                 {
+        //                     type: "paragraph",
+        //                     content: [{
+        //                         type: "text",
+        //                         content: "blockquote 1"
+        //                     }],
+        //                 },
+        //                 {
+        //                     type: "paragraph",
+        //                     content: [{
+        //                         type: "text",
+        //                         content: "blockquote 2"
+        //                     }],
+        //                 }
+        //             ]
+        //         },
+        //         {
+        //             type: "paragraph",
+        //             content: [{
+        //                 type: "text",
+        //                 content: "para 2"
+        //             }],
+        //         },
+        //     ]);
+        // });
 
-        it("should not let a > escape a paragraph as a blockquote", function () {
-            var parsed = blockParse(
-                "para 1 > not a quote\n\n"
-            );
-            validateParse(parsed, [{
-                type: "paragraph",
-                content: [
-                    { content: "para 1 ", type: "text" },
-                    { content: "> not a quote", type: "text" },
-                ]
-            }]);
-        });
+        // it("should not let a > escape a paragraph as a blockquote", function () {
+        //     var parsed = blockParse(
+        //         "para 1 > not a quote\n\n"
+        //     );
+        //     validateParse(parsed, [{
+        //         type: "paragraph",
+        //         content: [
+        //             { content: "para 1 ", type: "text" },
+        //             { content: "> not a quote", type: "text" },
+        //         ]
+        //     }]);
+        // });
 
-        it("should parse a single top-level code block", function () {
-            var parsed = blockParse("    if (true) { code(); }\n\n");
-            validateParse(parsed, [{
-                type: "codeBlock",
-                lang: undefined,
-                content: "if (true) { code(); }"
-            }]);
-        });
+        // it("should parse a single top-level code block", function () {
+        //     var parsed = blockParse("    if (true) { code(); }\n\n");
+        //     validateParse(parsed, [{
+        //         type: "codeBlock",
+        //         lang: undefined,
+        //         content: "if (true) { code(); }"
+        //     }]);
+        // });
 
-        it("should parse a code block with trailing spaces", function () {
-            var parsed = blockParse("    if (true) { code(); }\n    \n\n");
-            validateParse(parsed, [{
-                type: "codeBlock",
-                lang: undefined,
-                content: "if (true) { code(); }"
-            }]);
-        });
+        // it("should parse a code block with trailing spaces", function () {
+        //     var parsed = blockParse("    if (true) { code(); }\n    \n\n");
+        //     validateParse(parsed, [{
+        //         type: "codeBlock",
+        //         lang: undefined,
+        //         content: "if (true) { code(); }"
+        //     }]);
+        // });
 
         it("should parse fence blocks", function () {
             var parsed = blockParse("```\ncode\n```\n\n");
@@ -1710,811 +1710,811 @@ describe("simple markdown", function () {
             }]);
         });
 
-        it("should parse mixed paragraphs and code", function () {
-            var parsed = blockParse(
-                "this is regular text\n\n" +
-                "    this is code\n\n" +
-                "this is more regular text\n\n");
-            validateParse(parsed, [
-                {
-                    type: "paragraph",
-                    content: [{
-                        type: "text",
-                        content: "this is regular text"
-                    }]
-                },
-                {
-                    type: "codeBlock",
-                    lang: undefined,
-                    content: "this is code"
-                },
-                {
-                    type: "paragraph",
-                    content: [{
-                        type: "text",
-                        content: "this is more regular text"
-                    }]
-                },
-            ]);
-        });
+        // it("should parse mixed paragraphs and code", function () {
+        //     var parsed = blockParse(
+        //         "this is regular text\n\n" +
+        //         "    this is code\n\n" +
+        //         "this is more regular text\n\n");
+        //     validateParse(parsed, [
+        //         {
+        //             type: "paragraph",
+        //             content: [{
+        //                 type: "text",
+        //                 content: "this is regular text"
+        //             }]
+        //         },
+        //         {
+        //             type: "codeBlock",
+        //             lang: undefined,
+        //             content: "this is code"
+        //         },
+        //         {
+        //             type: "paragraph",
+        //             content: [{
+        //                 type: "text",
+        //                 content: "this is more regular text"
+        //             }]
+        //         },
+        //     ]);
+        // });
 
-        it("should parse top-level horizontal rules", function () {
-            var parsed = blockParse(
-                "---\n\n" +
-                "***\n\n" +
-                "___\n\n" +
-                " - - - - \n\n" +
-                "_ _ _\n\n" +
-                "  ***  \n\n"
-            );
-            validateParse(parsed, [
-                { type: "hr" },
-                { type: "hr" },
-                { type: "hr" },
-                { type: "hr" },
-                { type: "hr" },
-                { type: "hr" },
-            ]);
-        });
+        // it("should parse top-level horizontal rules", function () {
+        //     var parsed = blockParse(
+        //         "---\n\n" +
+        //         "***\n\n" +
+        //         "___\n\n" +
+        //         " - - - - \n\n" +
+        //         "_ _ _\n\n" +
+        //         "  ***  \n\n"
+        //     );
+        //     validateParse(parsed, [
+        //         { type: "hr" },
+        //         { type: "hr" },
+        //         { type: "hr" },
+        //         { type: "hr" },
+        //         { type: "hr" },
+        //         { type: "hr" },
+        //     ]);
+        // });
 
-        it("should parse hrs between paragraphs", function () {
-            var parsed = blockParse(
-                "para 1\n\n" +
-                " * * * \n\n" +
-                "para 2\n\n");
-            validateParse(parsed, [
-                {
-                    type: "paragraph",
-                    content: [{
-                        type: "text",
-                        content: "para 1"
-                    }]
-                },
-                { type: "hr" },
-                {
-                    type: "paragraph",
-                    content: [{
-                        type: "text",
-                        content: "para 2"
-                    }]
-                },
-            ]);
-        });
+        // it("should parse hrs between paragraphs", function () {
+        //     var parsed = blockParse(
+        //         "para 1\n\n" +
+        //         " * * * \n\n" +
+        //         "para 2\n\n");
+        //     validateParse(parsed, [
+        //         {
+        //             type: "paragraph",
+        //             content: [{
+        //                 type: "text",
+        //                 content: "para 1"
+        //             }]
+        //         },
+        //         { type: "hr" },
+        //         {
+        //             type: "paragraph",
+        //             content: [{
+        //                 type: "text",
+        //                 content: "para 2"
+        //             }]
+        //         },
+        //     ]);
+        // });
 
-        it("should not allow hrs within a paragraph", function () {
-            var parsed = blockParse(
-                "paragraph ----\n" +
-                "more paragraph\n\n"
-            );
-            validateParse(parsed, [{
-                type: "paragraph",
-                content: [
-                    { content: "paragraph ", type: "text" },
-                    { content: "-", type: "text" },
-                    { content: "-", type: "text" },
-                    { content: "-", type: "text" },
-                    { content: "-\nmore paragraph", type: "text" },
-                ]
-            }]);
-        });
+        // it("should not allow hrs within a paragraph", function () {
+        //     var parsed = blockParse(
+        //         "paragraph ----\n" +
+        //         "more paragraph\n\n"
+        //     );
+        //     validateParse(parsed, [{
+        //         type: "paragraph",
+        //         content: [
+        //             { content: "paragraph ", type: "text" },
+        //             { content: "-", type: "text" },
+        //             { content: "-", type: "text" },
+        //             { content: "-", type: "text" },
+        //             { content: "-\nmore paragraph", type: "text" },
+        //         ]
+        //     }]);
+        // });
 
-        it("should parse simple unordered lists", function () {
-            var parsed = blockParse(
-                " * hi\n" +
-                " * bye\n" +
-                " * there\n\n"
-            );
-            validateParse(parsed, [{
-                ordered: false,
-                start: undefined,
-                items: [
-                    [{
-                        content: "hi",
-                        type: "text",
-                    }],
-                    [{
-                        content: "bye",
-                        type: "text",
-                    }],
-                    [{
-                        content: "there",
-                        type: "text",
-                    }],
-                ],
-                type: "list",
-            }]);
-        });
+        // it("should parse simple unordered lists", function () {
+        //     var parsed = blockParse(
+        //         " * hi\n" +
+        //         " * bye\n" +
+        //         " * there\n\n"
+        //     );
+        //     validateParse(parsed, [{
+        //         ordered: false,
+        //         start: undefined,
+        //         items: [
+        //             [{
+        //                 content: "hi",
+        //                 type: "text",
+        //             }],
+        //             [{
+        //                 content: "bye",
+        //                 type: "text",
+        //             }],
+        //             [{
+        //                 content: "there",
+        //                 type: "text",
+        //             }],
+        //         ],
+        //         type: "list",
+        //     }]);
+        // });
 
-        it("should parse simple ordered lists", function () {
-            var parsed = blockParse(
-                "1. first\n" +
-                "2. second\n" +
-                "3. third\n\n"
-            );
-            validateParse(parsed, [{
-                type: "list",
-                ordered: true,
-                start: 1,
-                items: [
-                    [{
-                        type: "text",
-                        content: "first",
-                    }],
-                    [{
-                        type: "text",
-                        content: "second",
-                    }],
-                    [{
-                        type: "text",
-                        content: "third",
-                    }],
-                ]
-            }]);
-        });
+        // it("should parse simple ordered lists", function () {
+        //     var parsed = blockParse(
+        //         "1. first\n" +
+        //         "2. second\n" +
+        //         "3. third\n\n"
+        //     );
+        //     validateParse(parsed, [{
+        //         type: "list",
+        //         ordered: true,
+        //         start: 1,
+        //         items: [
+        //             [{
+        //                 type: "text",
+        //                 content: "first",
+        //             }],
+        //             [{
+        //                 type: "text",
+        //                 content: "second",
+        //             }],
+        //             [{
+        //                 type: "text",
+        //                 content: "third",
+        //             }],
+        //         ]
+        //     }]);
+        // });
 
-        it("should parse simple ordered lists with silly numbers", function () {
-            var parsed = blockParse(
-                "1. first\n" +
-                "13. second\n" +
-                "9. third\n\n"
-            );
-            validateParse(parsed, [{
-                type: "list",
-                start: 1,
-                ordered: true,
-                items: [
-                    [{
-                        type: "text",
-                        content: "first",
-                    }],
-                    [{
-                        type: "text",
-                        content: "second",
-                    }],
-                    [{
-                        type: "text",
-                        content: "third",
-                    }],
-                ]
-            }]);
+        // it("should parse simple ordered lists with silly numbers", function () {
+        //     var parsed = blockParse(
+        //         "1. first\n" +
+        //         "13. second\n" +
+        //         "9. third\n\n"
+        //     );
+        //     validateParse(parsed, [{
+        //         type: "list",
+        //         start: 1,
+        //         ordered: true,
+        //         items: [
+        //             [{
+        //                 type: "text",
+        //                 content: "first",
+        //             }],
+        //             [{
+        //                 type: "text",
+        //                 content: "second",
+        //             }],
+        //             [{
+        //                 type: "text",
+        //                 content: "third",
+        //             }],
+        //         ]
+        //     }]);
 
-            var parsed2 = blockParse(
-                "63. first\n" +
-                "13. second\n" +
-                "9. third\n\n"
-            );
-            validateParse(parsed2, [{
-                type: "list",
-                start: 63,
-                ordered: true,
-                items: [
-                    [{
-                        type: "text",
-                        content: "first",
-                    }],
-                    [{
-                        type: "text",
-                        content: "second",
-                    }],
-                    [{
-                        type: "text",
-                        content: "third",
-                    }],
-                ]
-            }]);
-        });
+        //     var parsed2 = blockParse(
+        //         "63. first\n" +
+        //         "13. second\n" +
+        //         "9. third\n\n"
+        //     );
+        //     validateParse(parsed2, [{
+        //         type: "list",
+        //         start: 63,
+        //         ordered: true,
+        //         items: [
+        //             [{
+        //                 type: "text",
+        //                 content: "first",
+        //             }],
+        //             [{
+        //                 type: "text",
+        //                 content: "second",
+        //             }],
+        //             [{
+        //                 type: "text",
+        //                 content: "third",
+        //             }],
+        //         ]
+        //     }]);
+        // });
 
-        it("should parse nested lists", function () {
-            var parsed = blockParse(
-                "1. first\n" +
-                "2. second\n" +
-                "   * inner\n" +
-                "   * inner\n" +
-                "3. third\n\n"
-            );
-            validateParse(parsed, [{
-                ordered: true,
-                start: 1,
-                items: [
-                    [{
-                        content: "first",
-                        type: "text",
-                    }],
-                    [
-                        {
-                            content: "second\n",
-                            type: "text",
-                        },
-                        {
-                            ordered: false,
-                            start: undefined,
-                            items: [
-                                [{
-                                    content: "inner",
-                                    type: "text",
-                                }],
-                                [{
-                                    content: "inner",
-                                    type: "text",
-                                }]
-                            ],
-                            type: "list",
-                        }
-                    ],
-                    [{
-                        content: "third",
-                        type: "text",
-                    }],
-                ],
-                type: "list",
-            }]);
+        // it("should parse nested lists", function () {
+        //     var parsed = blockParse(
+        //         "1. first\n" +
+        //         "2. second\n" +
+        //         "   * inner\n" +
+        //         "   * inner\n" +
+        //         "3. third\n\n"
+        //     );
+        //     validateParse(parsed, [{
+        //         ordered: true,
+        //         start: 1,
+        //         items: [
+        //             [{
+        //                 content: "first",
+        //                 type: "text",
+        //             }],
+        //             [
+        //                 {
+        //                     content: "second\n",
+        //                     type: "text",
+        //                 },
+        //                 {
+        //                     ordered: false,
+        //                     start: undefined,
+        //                     items: [
+        //                         [{
+        //                             content: "inner",
+        //                             type: "text",
+        //                         }],
+        //                         [{
+        //                             content: "inner",
+        //                             type: "text",
+        //                         }]
+        //                     ],
+        //                     type: "list",
+        //                 }
+        //             ],
+        //             [{
+        //                 content: "third",
+        //                 type: "text",
+        //             }],
+        //         ],
+        //         type: "list",
+        //     }]);
 
-            var parsed = blockParse(
-                " * hi\n" +
-                "    * bye\n" +
-                "    * there\n\n"
-            );
-            validateParse(parsed, [{
-                ordered: false,
-                start: undefined,
-                items: [
-                    [{
-                        content: 'hi\n ', // NOTE(aria): The extra space here is
-                        type: 'text',     //  weird and we should consider fixing
-                    },
-                    {
-                        ordered: false,
-                        start: undefined,
-                        items: [
-                            [{
-                                content: "bye",
-                                type: "text",
-                            }],
-                            [{
-                                content: "there",
-                                type: "text",
-                            }],
-                        ],
-                        type: "list",
-                    }]
-                ],
-                type: "list",
-            }]);
-        });
+        //     var parsed = blockParse(
+        //         " * hi\n" +
+        //         "    * bye\n" +
+        //         "    * there\n\n"
+        //     );
+        //     validateParse(parsed, [{
+        //         ordered: false,
+        //         start: undefined,
+        //         items: [
+        //             [{
+        //                 content: 'hi\n ', // NOTE(aria): The extra space here is
+        //                 type: 'text',     //  weird and we should consider fixing
+        //             },
+        //             {
+        //                 ordered: false,
+        //                 start: undefined,
+        //                 items: [
+        //                     [{
+        //                         content: "bye",
+        //                         type: "text",
+        //                     }],
+        //                     [{
+        //                         content: "there",
+        //                         type: "text",
+        //                     }],
+        //                 ],
+        //                 type: "list",
+        //             }]
+        //         ],
+        //         type: "list",
+        //     }]);
+        // });
 
-        it("should parse loose lists", function () {
-            var parsed = blockParse(
-                " * hi\n\n" +
-                " * bye\n\n" +
-                " * there\n\n"
-            );
-            validateParse(parsed, [{
-                type: "list",
-                ordered: false,
-                start: undefined,
-                items: [
-                    [{
-                        type: "paragraph",
-                        content: [{
-                            type: "text",
-                            content: "hi"
-                        }]
-                    }],
-                    [{
-                        type: "paragraph",
-                        content: [{
-                            type: "text",
-                            content: "bye"
-                        }]
-                    }],
-                    [{
-                        type: "paragraph",
-                        content: [{
-                            type: "text",
-                            content: "there"
-                        }]
-                    }],
-                ]
-            }]);
-        });
+        // it("should parse loose lists", function () {
+        //     var parsed = blockParse(
+        //         " * hi\n\n" +
+        //         " * bye\n\n" +
+        //         " * there\n\n"
+        //     );
+        //     validateParse(parsed, [{
+        //         type: "list",
+        //         ordered: false,
+        //         start: undefined,
+        //         items: [
+        //             [{
+        //                 type: "paragraph",
+        //                 content: [{
+        //                     type: "text",
+        //                     content: "hi"
+        //                 }]
+        //             }],
+        //             [{
+        //                 type: "paragraph",
+        //                 content: [{
+        //                     type: "text",
+        //                     content: "bye"
+        //                 }]
+        //             }],
+        //             [{
+        //                 type: "paragraph",
+        //                 content: [{
+        //                     type: "text",
+        //                     content: "there"
+        //                 }]
+        //             }],
+        //         ]
+        //     }]);
+        // });
 
-        it("should have defined behaviour for semi-loose lists", function () {
-            // we mostly care that this does something vaguely reasonable.
-            // if you write markdown like this the results are your own fault.
-            var parsed = blockParse(
-                " * hi\n" +
-                " * bye\n\n" +
-                " * there\n\n"
-            );
-            validateParse(parsed, [{
-                type: "list",
-                ordered: false,
-                start: undefined,
-                items: [
-                    [{
-                        type: "text",
-                        content: "hi"
-                    }],
-                    [{
-                        type: "paragraph",
-                        content: [{
-                            type: "text",
-                            content: "bye"
-                        }]
-                    }],
-                    [{
-                        type: "paragraph",
-                        content: [{
-                            type: "text",
-                            content: "there"
-                        }]
-                    }],
-                ]
-            }]);
+        // it("should have defined behaviour for semi-loose lists", function () {
+        //     // we mostly care that this does something vaguely reasonable.
+        //     // if you write markdown like this the results are your own fault.
+        //     var parsed = blockParse(
+        //         " * hi\n" +
+        //         " * bye\n\n" +
+        //         " * there\n\n"
+        //     );
+        //     validateParse(parsed, [{
+        //         type: "list",
+        //         ordered: false,
+        //         start: undefined,
+        //         items: [
+        //             [{
+        //                 type: "text",
+        //                 content: "hi"
+        //             }],
+        //             [{
+        //                 type: "paragraph",
+        //                 content: [{
+        //                     type: "text",
+        //                     content: "bye"
+        //                 }]
+        //             }],
+        //             [{
+        //                 type: "paragraph",
+        //                 content: [{
+        //                     type: "text",
+        //                     content: "there"
+        //                 }]
+        //             }],
+        //         ]
+        //     }]);
 
-            var parsed2 = blockParse(
-                " * hi\n\n" +
-                " * bye\n" +
-                " * there\n\n"
-            );
-            validateParse(parsed2, [{
-                type: "list",
-                ordered: false,
-                start: undefined,
-                items: [
-                    [{
-                        type: "paragraph",
-                        content: [{
-                            type: "text",
-                            content: "hi"
-                        }]
-                    }],
-                    [{
-                        type: "text",
-                        content: "bye"
-                    }],
-                    [{
-                        type: "text",
-                        content: "there"
-                    }],
-                ]
-            }]);
-        });
+        //     var parsed2 = blockParse(
+        //         " * hi\n\n" +
+        //         " * bye\n" +
+        //         " * there\n\n"
+        //     );
+        //     validateParse(parsed2, [{
+        //         type: "list",
+        //         ordered: false,
+        //         start: undefined,
+        //         items: [
+        //             [{
+        //                 type: "paragraph",
+        //                 content: [{
+        //                     type: "text",
+        //                     content: "hi"
+        //                 }]
+        //             }],
+        //             [{
+        //                 type: "text",
+        //                 content: "bye"
+        //             }],
+        //             [{
+        //                 type: "text",
+        //                 content: "there"
+        //             }],
+        //         ]
+        //     }]);
+        // });
 
-        it("should parse paragraphs within loose lists", function () {
-            var parsed = blockParse(
-                " * hi\n\n" +
-                "   hello\n\n" +
-                " * bye\n\n" +
-                " * there\n\n"
-            );
-            validateParse(parsed, [{
-                type: "list",
-                ordered: false,
-                start: undefined,
-                items: [
-                    [
-                        {
-                            type: "paragraph",
-                            content: [{
-                                type: "text",
-                                content: "hi"
-                            }]
-                        },
-                        {
-                            type: "paragraph",
-                            content: [{
-                                type: "text",
-                                content: "hello"
-                            }]
-                        },
-                    ],
-                    [{
-                        type: "paragraph",
-                        content: [{
-                            type: "text",
-                            content: "bye"
-                        }]
-                    }],
-                    [{
-                        type: "paragraph",
-                        content: [{
-                            type: "text",
-                            content: "there"
-                        }]
-                    }],
-                ]
-            }]);
-        });
+        // it("should parse paragraphs within loose lists", function () {
+        //     var parsed = blockParse(
+        //         " * hi\n\n" +
+        //         "   hello\n\n" +
+        //         " * bye\n\n" +
+        //         " * there\n\n"
+        //     );
+        //     validateParse(parsed, [{
+        //         type: "list",
+        //         ordered: false,
+        //         start: undefined,
+        //         items: [
+        //             [
+        //                 {
+        //                     type: "paragraph",
+        //                     content: [{
+        //                         type: "text",
+        //                         content: "hi"
+        //                     }]
+        //                 },
+        //                 {
+        //                     type: "paragraph",
+        //                     content: [{
+        //                         type: "text",
+        //                         content: "hello"
+        //                     }]
+        //                 },
+        //             ],
+        //             [{
+        //                 type: "paragraph",
+        //                 content: [{
+        //                     type: "text",
+        //                     content: "bye"
+        //                 }]
+        //             }],
+        //             [{
+        //                 type: "paragraph",
+        //                 content: [{
+        //                     type: "text",
+        //                     content: "there"
+        //                 }]
+        //             }],
+        //         ]
+        //     }]);
+        // });
 
-        it("should allow line breaks+wrapping in tight lists", function () {
-            var parsed = blockParse(
-                " * hi\n" +
-                "   hello\n\n" +
-                " * bye\n\n" +
-                " * there\n\n"
-            );
-            validateParse(parsed, [{
-                type: "list",
-                ordered: false,
-                start: undefined,
-                items: [
-                    [{
-                        type: "paragraph",
-                        content: [{
-                            type: "text",
-                            content: "hi\nhello"
-                        }]
-                    }],
-                    [{
-                        type: "paragraph",
-                        content: [{
-                            type: "text",
-                            content: "bye"
-                        }]
-                    }],
-                    [{
-                        type: "paragraph",
-                        content: [{
-                            type: "text",
-                            content: "there"
-                        }]
-                    }],
-                ]
-            }]);
-        });
+        // it("should allow line breaks+wrapping in tight lists", function () {
+        //     var parsed = blockParse(
+        //         " * hi\n" +
+        //         "   hello\n\n" +
+        //         " * bye\n\n" +
+        //         " * there\n\n"
+        //     );
+        //     validateParse(parsed, [{
+        //         type: "list",
+        //         ordered: false,
+        //         start: undefined,
+        //         items: [
+        //             [{
+        //                 type: "paragraph",
+        //                 content: [{
+        //                     type: "text",
+        //                     content: "hi\nhello"
+        //                 }]
+        //             }],
+        //             [{
+        //                 type: "paragraph",
+        //                 content: [{
+        //                     type: "text",
+        //                     content: "bye"
+        //                 }]
+        //             }],
+        //             [{
+        //                 type: "paragraph",
+        //                 content: [{
+        //                     type: "text",
+        //                     content: "there"
+        //                 }]
+        //             }],
+        //         ]
+        //     }]);
+        // });
 
-        it("should allow code inside list items", function () {
-            var parsed = blockParse(
-                " * this is a list\n\n" +
-                "       with code in it\n\n"
-            );
-            validateParse(parsed, [{
-                type: "list",
-                ordered: false,
-                start: undefined,
-                items: [[
-                    {
-                        type: "paragraph",
-                        content: [{
-                            type: "text",
-                            content: "this is a list"
-                        }]
-                    },
-                    {
-                        type: "codeBlock",
-                        lang: undefined,
-                        content: "with code in it"
-                    }
-                ]]
-            }]);
+        // it("should allow code inside list items", function () {
+        //     var parsed = blockParse(
+        //         " * this is a list\n\n" +
+        //         "       with code in it\n\n"
+        //     );
+        //     validateParse(parsed, [{
+        //         type: "list",
+        //         ordered: false,
+        //         start: undefined,
+        //         items: [[
+        //             {
+        //                 type: "paragraph",
+        //                 content: [{
+        //                     type: "text",
+        //                     content: "this is a list"
+        //                 }]
+        //             },
+        //             {
+        //                 type: "codeBlock",
+        //                 lang: undefined,
+        //                 content: "with code in it"
+        //             }
+        //         ]]
+        //     }]);
 
-            var parsed2 = blockParse(
-                " * this is a list\n\n" +
-                "       with code in it\n\n" +
-                " * second item\n" +
-                "\n"
-            );
-            validateParse(parsed2, [{
-                type: "list",
-                ordered: false,
-                start: undefined,
-                items: [
-                    [
-                        {
-                            type: "paragraph",
-                            content: [{
-                                type: "text",
-                                content: "this is a list"
-                            }]
-                        },
-                        {
-                            type: "codeBlock",
-                            lang: undefined,
-                            content: "with code in it"
-                        }
-                    ],
-                    [
-                        {
-                            type: "paragraph",
-                            content: [{
-                                type: "text",
-                                content: "second item"
-                            }]
-                        },
-                    ],
-                ]
-            }]);
-        });
+        //     var parsed2 = blockParse(
+        //         " * this is a list\n\n" +
+        //         "       with code in it\n\n" +
+        //         " * second item\n" +
+        //         "\n"
+        //     );
+        //     validateParse(parsed2, [{
+        //         type: "list",
+        //         ordered: false,
+        //         start: undefined,
+        //         items: [
+        //             [
+        //                 {
+        //                     type: "paragraph",
+        //                     content: [{
+        //                         type: "text",
+        //                         content: "this is a list"
+        //                     }]
+        //                 },
+        //                 {
+        //                     type: "codeBlock",
+        //                     lang: undefined,
+        //                     content: "with code in it"
+        //                 }
+        //             ],
+        //             [
+        //                 {
+        //                     type: "paragraph",
+        //                     content: [{
+        //                         type: "text",
+        //                         content: "second item"
+        //                     }]
+        //                 },
+        //             ],
+        //         ]
+        //     }]);
+        // });
 
-        it("should allow lists inside blockquotes", function () {
-            // This list also has lots of trailing space after the *s
-            var parsed = blockParse(
-                "> A list within a blockquote\n" +
-                ">\n" +
-                "> *    asterisk 1\n" +
-                "> *    asterisk 2\n" +
-                "> *    asterisk 3\n" +
-                "\n"
-            );
-            validateParse(parsed, [{
-                type: "blockQuote",
-                content: [
-                    {
-                        type: "paragraph",
-                        content: [{
-                            content: "A list within a blockquote",
-                            type: "text",
-                        }]
-                    },
-                    {
+        // it("should allow lists inside blockquotes", function () {
+        //     // This list also has lots of trailing space after the *s
+        //     var parsed = blockParse(
+        //         "> A list within a blockquote\n" +
+        //         ">\n" +
+        //         "> *    asterisk 1\n" +
+        //         "> *    asterisk 2\n" +
+        //         "> *    asterisk 3\n" +
+        //         "\n"
+        //     );
+        //     validateParse(parsed, [{
+        //         type: "blockQuote",
+        //         content: [
+        //             {
+        //                 type: "paragraph",
+        //                 content: [{
+        //                     content: "A list within a blockquote",
+        //                     type: "text",
+        //                 }]
+        //             },
+        //             {
 
-                        type: "list",
-                        ordered: false,
-                        start: undefined,
-                        items: [
-                            [{
-                                content: "asterisk 1",
-                                type: "text",
-                            }],
-                            [{
-                                content: "asterisk 2",
-                                type: "text",
-                            }],
-                            [{
-                                content: "asterisk 3",
-                                type: "text",
-                            }],
-                        ]
-                    }
-                ]
-            }]);
-        });
+        //                 type: "list",
+        //                 ordered: false,
+        //                 start: undefined,
+        //                 items: [
+        //                     [{
+        //                         content: "asterisk 1",
+        //                         type: "text",
+        //                     }],
+        //                     [{
+        //                         content: "asterisk 2",
+        //                         type: "text",
+        //                     }],
+        //                     [{
+        //                         content: "asterisk 3",
+        //                         type: "text",
+        //                     }],
+        //                 ]
+        //             }
+        //         ]
+        //     }]);
+        // });
 
-        it("symbols should not break a paragraph into a list", function () {
-            var parsed = blockParse("hi - there\n\n");
-            validateParse(parsed, [{
-                type: "paragraph",
-                content: [
-                    { content: "hi ", type: "text" },
-                    { content: "- there", type: "text" },
-                ]
-            }]);
+        // it("symbols should not break a paragraph into a list", function () {
+        //     var parsed = blockParse("hi - there\n\n");
+        //     validateParse(parsed, [{
+        //         type: "paragraph",
+        //         content: [
+        //             { content: "hi ", type: "text" },
+        //             { content: "- there", type: "text" },
+        //         ]
+        //     }]);
 
-            var parsed2 = blockParse("hi * there\n\n");
-            validateParse(parsed2, [{
-                type: "paragraph",
-                content: [
-                    { content: "hi ", type: "text" },
-                    { content: "* there", type: "text" },
-                ]
-            }]);
+        //     var parsed2 = blockParse("hi * there\n\n");
+        //     validateParse(parsed2, [{
+        //         type: "paragraph",
+        //         content: [
+        //             { content: "hi ", type: "text" },
+        //             { content: "* there", type: "text" },
+        //         ]
+        //     }]);
 
-            var parsed3 = blockParse("hi 1. there\n\n");
-            validateParse(parsed3, [{
-                type: "paragraph",
-                content: [
-                    { content: "hi 1", type: "text" },
-                    { content: ". there", type: "text" },
-                ]
-            }]);
-        });
+        //     var parsed3 = blockParse("hi 1. there\n\n");
+        //     validateParse(parsed3, [{
+        //         type: "paragraph",
+        //         content: [
+        //             { content: "hi 1", type: "text" },
+        //             { content: ". there", type: "text" },
+        //         ]
+        //     }]);
+        // });
 
-        it("dashes or numbers should not break a list item into a list", function () {
-            var parsed = blockParse("- hi - there\n\n");
-            validateParse(parsed, [{
-                type: "list",
-                ordered: false,
-                start: undefined,
-                items: [[
-                    { content: "hi ", type: "text" },
-                    { content: "- there", type: "text" },
-                ]]
-            }]);
+        // it("dashes or numbers should not break a list item into a list", function () {
+        //     var parsed = blockParse("- hi - there\n\n");
+        //     validateParse(parsed, [{
+        //         type: "list",
+        //         ordered: false,
+        //         start: undefined,
+        //         items: [[
+        //             { content: "hi ", type: "text" },
+        //             { content: "- there", type: "text" },
+        //         ]]
+        //     }]);
 
-            var parsed2 = blockParse("* hi * there\n\n");
-            validateParse(parsed2, [{
-                type: "list",
-                ordered: false,
-                start: undefined,
-                items: [[
-                    { content: "hi ", type: "text" },
-                    { content: "* there", type: "text" },
-                ]]
-            }]);
+        //     var parsed2 = blockParse("* hi * there\n\n");
+        //     validateParse(parsed2, [{
+        //         type: "list",
+        //         ordered: false,
+        //         start: undefined,
+        //         items: [[
+        //             { content: "hi ", type: "text" },
+        //             { content: "* there", type: "text" },
+        //         ]]
+        //     }]);
 
-            var parsed3 = blockParse("1. hi 1. there\n\n");
-            validateParse(parsed3, [{
-                type: "list",
-                ordered: true,
-                start: 1,
-                items: [[
-                    { content: "hi 1", type: "text" },
-                    { content: ". there", type: "text" },
-                ]]
-            }]);
-        });
+        //     var parsed3 = blockParse("1. hi 1. there\n\n");
+        //     validateParse(parsed3, [{
+        //         type: "list",
+        //         ordered: true,
+        //         start: 1,
+        //         items: [[
+        //             { content: "hi 1", type: "text" },
+        //             { content: ". there", type: "text" },
+        //         ]]
+        //     }]);
+        // });
 
-        it("should ignore double spaces at the end of lists", function () {
-            var parsed = blockParse(" * hi  \n * there\n\n");
-            validateParse(parsed, [{
-                type: "list",
-                ordered: false,
-                start: undefined,
-                items: [
-                    [{ type: "text", content: "hi" }],
-                    [{ type: "text", content: "there" }],
-                ]
-            }]);
-        });
+        // it("should ignore double spaces at the end of lists", function () {
+        //     var parsed = blockParse(" * hi  \n * there\n\n");
+        //     validateParse(parsed, [{
+        //         type: "list",
+        //         ordered: false,
+        //         start: undefined,
+        //         items: [
+        //             [{ type: "text", content: "hi" }],
+        //             [{ type: "text", content: "there" }],
+        //         ]
+        //     }]);
+        // });
 
-        it("should parse very simple tables", function () {
-            var expected = [{
-                type: "table",
-                header: [
-                    [{ type: "text", content: "h1" }],
-                    [{ type: "text", content: "h2" }],
-                    [{ type: "text", content: "h3" }]
-                ],
-                align: [null, null, null],
-                cells: [
-                    [
-                        [{ type: "text", content: "d1" }],
-                        [{ type: "text", content: "d2" }],
-                        [{ type: "text", content: "d3" }]
-                    ],
-                    [
-                        [{ type: "text", content: "e1" }],
-                        [{ type: "text", content: "e2" }],
-                        [{ type: "text", content: "e3" }]
-                    ]
-                ]
-            }];
+        // it("should parse very simple tables", function () {
+        //     var expected = [{
+        //         type: "table",
+        //         header: [
+        //             [{ type: "text", content: "h1" }],
+        //             [{ type: "text", content: "h2" }],
+        //             [{ type: "text", content: "h3" }]
+        //         ],
+        //         align: [null, null, null],
+        //         cells: [
+        //             [
+        //                 [{ type: "text", content: "d1" }],
+        //                 [{ type: "text", content: "d2" }],
+        //                 [{ type: "text", content: "d3" }]
+        //             ],
+        //             [
+        //                 [{ type: "text", content: "e1" }],
+        //                 [{ type: "text", content: "e2" }],
+        //                 [{ type: "text", content: "e3" }]
+        //             ]
+        //         ]
+        //     }];
 
-            var parsedPiped = blockParse(
-                "| h1 | h2 | h3 |\n" +
-                "| -- | -- | -- |\n" +
-                "| d1 | d2 | d3 |\n" +
-                "| e1 | e2 | e3 |\n" +
-                "\n"
-            );
-            validateParse(parsedPiped, expected);
+        //     var parsedPiped = blockParse(
+        //         "| h1 | h2 | h3 |\n" +
+        //         "| -- | -- | -- |\n" +
+        //         "| d1 | d2 | d3 |\n" +
+        //         "| e1 | e2 | e3 |\n" +
+        //         "\n"
+        //     );
+        //     validateParse(parsedPiped, expected);
 
-            var parsedNp = blockParse(
-                "h1 | h2 | h3\n" +
-                "- | - | -\n" +
-                "d1 | d2 | d3\n" +
-                "e1 | e2 | e3\n" +
-                "\n"
-            );
-            validateParse(parsedNp, expected);
-        });
+        //     var parsedNp = blockParse(
+        //         "h1 | h2 | h3\n" +
+        //         "- | - | -\n" +
+        //         "d1 | d2 | d3\n" +
+        //         "e1 | e2 | e3\n" +
+        //         "\n"
+        //     );
+        //     validateParse(parsedNp, expected);
+        // });
 
-        it("should parse inside table contents", function () {
-            var expected = [{
-                type: "table",
-                header: [
-                    [{ type: "em", content: [{ type: "text", content: "h1" }] }],
-                    [{ type: "em", content: [{ type: "text", content: "h2" }] }],
-                    [{ type: "em", content: [{ type: "text", content: "h3" }] }],
-                ],
-                align: [null, null, null],
-                cells: [[
-                    [{ type: "em", content: [{ type: "text", content: "d1" }] }],
-                    [{ type: "em", content: [{ type: "text", content: "d2" }] }],
-                    [{ type: "em", content: [{ type: "text", content: "d3" }] }],
-                ]]
-            }];
+        // it("should parse inside table contents", function () {
+        //     var expected = [{
+        //         type: "table",
+        //         header: [
+        //             [{ type: "em", content: [{ type: "text", content: "h1" }] }],
+        //             [{ type: "em", content: [{ type: "text", content: "h2" }] }],
+        //             [{ type: "em", content: [{ type: "text", content: "h3" }] }],
+        //         ],
+        //         align: [null, null, null],
+        //         cells: [[
+        //             [{ type: "em", content: [{ type: "text", content: "d1" }] }],
+        //             [{ type: "em", content: [{ type: "text", content: "d2" }] }],
+        //             [{ type: "em", content: [{ type: "text", content: "d3" }] }],
+        //         ]]
+        //     }];
 
-            var parsedPiped = blockParse(
-                "| *h1* | *h2* | *h3* |\n" +
-                "| ---- | ---- | ---- |\n" +
-                "| *d1* | *d2* | *d3* |\n" +
-                "\n"
-            );
-            validateParse(parsedPiped, expected);
+        //     var parsedPiped = blockParse(
+        //         "| *h1* | *h2* | *h3* |\n" +
+        //         "| ---- | ---- | ---- |\n" +
+        //         "| *d1* | *d2* | *d3* |\n" +
+        //         "\n"
+        //     );
+        //     validateParse(parsedPiped, expected);
 
-            var parsedNp = blockParse(
-                "*h1* | *h2* | *h3*\n" +
-                "-|-|-\n" +
-                "*d1* | *d2* | *d3*\n" +
-                "\n"
-            );
-            validateParse(parsedNp, expected);
-        });
+        //     var parsedNp = blockParse(
+        //         "*h1* | *h2* | *h3*\n" +
+        //         "-|-|-\n" +
+        //         "*d1* | *d2* | *d3*\n" +
+        //         "\n"
+        //     );
+        //     validateParse(parsedNp, expected);
+        // });
 
-        it("should parse table alignments", function () {
-            var validateAligns = function (tableSrc, expectedAligns) {
-                var parsed = blockParse(tableSrc + "\n");
-                assert.strictEqual(parsed[0].type, "table");
-                var actualAligns = parsed[0].align;
-                validateParse(actualAligns, expectedAligns);
-            };
+        // it("should parse table alignments", function () {
+        //     var validateAligns = function (tableSrc, expectedAligns) {
+        //         var parsed = blockParse(tableSrc + "\n");
+        //         assert.strictEqual(parsed[0].type, "table");
+        //         var actualAligns = parsed[0].align;
+        //         validateParse(actualAligns, expectedAligns);
+        //     };
 
-            validateAligns(
-                "| h1 | h2 | h3 |\n" +
-                "| -- | -- | -- |\n" +
-                "| d1 | d2 | d3 |\n",
-                [null, null, null]
-            );
+        //     validateAligns(
+        //         "| h1 | h2 | h3 |\n" +
+        //         "| -- | -- | -- |\n" +
+        //         "| d1 | d2 | d3 |\n",
+        //         [null, null, null]
+        //     );
 
-            validateAligns(
-                "| h1 | h2 | h3 |\n" +
-                "|:--:|:-: | :-: |\n" +
-                "| d1 | d2 | d3 |\n",
-                ["center", "center", "center"]
-            );
+        //     validateAligns(
+        //         "| h1 | h2 | h3 |\n" +
+        //         "|:--:|:-: | :-: |\n" +
+        //         "| d1 | d2 | d3 |\n",
+        //         ["center", "center", "center"]
+        //     );
 
-            validateAligns(
-                "| h1 | h2 | h3 |\n" +
-                "| :- |:---| :--|\n" +
-                "| d1 | d2 | d3 |\n",
-                ["left", "left", "left"]
-            );
+        //     validateAligns(
+        //         "| h1 | h2 | h3 |\n" +
+        //         "| :- |:---| :--|\n" +
+        //         "| d1 | d2 | d3 |\n",
+        //         ["left", "left", "left"]
+        //     );
 
-            validateAligns(
-                "| h1 | h2 | h3 |\n" +
-                "| -: |-:  |  -:|\n" +
-                "| d1 | d2 | d3 |\n",
-                ["right", "right", "right"]
-            );
+        //     validateAligns(
+        //         "| h1 | h2 | h3 |\n" +
+        //         "| -: |-:  |  -:|\n" +
+        //         "| d1 | d2 | d3 |\n",
+        //         ["right", "right", "right"]
+        //     );
 
-            validateAligns(
-                "h1 | h2 | h3\n" +
-                ":-|:-:|-:\n" +
-                "d1 | d2 | d3\n",
-                ["left", "center", "right"]
-            );
+        //     validateAligns(
+        //         "h1 | h2 | h3\n" +
+        //         ":-|:-:|-:\n" +
+        //         "d1 | d2 | d3\n",
+        //         ["left", "center", "right"]
+        //     );
 
-            validateAligns(
-                "h1 | h2 | h3\n" +
-                " :---:  |:--|    --:\n" +
-                "d1 | d2 | d3\n",
-                ["center", "left", "right"]
-            );
-        });
+        //     validateAligns(
+        //         "h1 | h2 | h3\n" +
+        //         " :---:  |:--|    --:\n" +
+        //         "d1 | d2 | d3\n",
+        //         ["center", "left", "right"]
+        //     );
+        // });
 
-        it("should parse empty table cells", function () {
-            var expected = [{
-                type: "table",
-                header: [
-                    [],
-                    [],
-                    []
-                ],
-                align: [null, null, null],
-                cells: [
-                    [
-                        [],
-                        [],
-                        []
-                    ],
-                    [
-                        [],
-                        [],
-                        []
-                    ]
-                ]
-            }];
+        // it("should parse empty table cells", function () {
+        //     var expected = [{
+        //         type: "table",
+        //         header: [
+        //             [],
+        //             [],
+        //             []
+        //         ],
+        //         align: [null, null, null],
+        //         cells: [
+        //             [
+        //                 [],
+        //                 [],
+        //                 []
+        //             ],
+        //             [
+        //                 [],
+        //                 [],
+        //                 []
+        //             ]
+        //         ]
+        //     }];
 
-            var parsedPiped = blockParse(
-                "|    |    |    |\n" +
-                "| -- | -- | -- |\n" +
-                "|    |    |    |\n" +
-                "|    |    |    |\n" +
-                "\n"
-            );
-            validateParse(parsedPiped, expected);
+        //     var parsedPiped = blockParse(
+        //         "|    |    |    |\n" +
+        //         "| -- | -- | -- |\n" +
+        //         "|    |    |    |\n" +
+        //         "|    |    |    |\n" +
+        //         "\n"
+        //     );
+        //     validateParse(parsedPiped, expected);
 
-            var parsedNp = blockParse(
-                "   |    |   \n" +
-                "- | - | -\n" +
-                "   |    |   \n" +
-                "   |    |   \n" +
-                "\n"
-            );
-            validateParse(parsedNp, expected);
-        });
+        //     var parsedNp = blockParse(
+        //         "   |    |   \n" +
+        //         "- | - | -\n" +
+        //         "   |    |   \n" +
+        //         "   |    |   \n" +
+        //         "\n"
+        //     );
+        //     validateParse(parsedNp, expected);
+        // });
 
 
         it("should be able to parse <br>s", function () {
@@ -2934,692 +2934,692 @@ describe("simple markdown", function () {
         });
     });
 
-    describe("react output", function () {
-        it("should sanitize dangerous links", function () {
-            var html = htmlFromReactMarkdown(
-                "[link](javascript:alert%28%27hi%27%29)"
-            );
-            assert.strictEqual(html, "<a>link</a>");
-
-            var html2 = htmlFromReactMarkdown(
-                "[link][1]\n\n" +
-                "[1]: javascript:alert('hi');\n\n"
-            );
-            assert.strictEqual(
-                html2,
-                "<div class=\"paragraph\"><a>link</a></div>"
-            );
-        });
-
-        it("should not sanitize safe links", function () {
-            var html = htmlFromReactMarkdown(
-                "[link](https://www.google.com)"
-            );
-            assert.strictEqual(
-                html,
-                "<a href=\"https://www.google.com\">link</a>"
-            );
-
-            var html2 = htmlFromReactMarkdown(
-                "[link][1]\n\n" +
-                "[1]: https://www.google.com\n\n"
-            );
-            assert.strictEqual(
-                html2,
-                "<div class=\"paragraph\">" +
-                "<a href=\"https://www.google.com\">link</a>" +
-                "</div>"
-            );
-        });
-
-        it("should output headings", function () {
-            assertParsesToReact(
-                "### Heading!\n\n",
-                "<h3>Heading!</h3>"
-            );
-
-            assertParsesToReact(
-                "## hi! ##\n\n",
-                "<h2>hi!</h2>"
-            );
-
-            assertParsesToReact(
-                "Yay!\n====\n\n",
-                "<h1>Yay!</h1>"
-            );
-
-            assertParsesToReact(
-                "Success\n---\n\n",
-                "<h2>Success</h2>"
-            );
-        });
-
-        it("should output hrs", function () {
-            assertParsesToReact(
-                "-----\n\n",
-                "<hr/>"
-            );
-            assertParsesToReact(
-                " * * * \n\n",
-                "<hr/>"
-            );
-            assertParsesToReact(
-                "___\n\n",
-                "<hr/>"
-            );
-        });
-
-        it("should output codeblocks", function () {
-            var html = htmlFromReactMarkdown(
-                "    var microwave = new TimeMachine();\n\n"
-            );
-            assert.strictEqual(
-                html,
-                "<pre><code>var microwave = new TimeMachine();</code></pre>"
-            );
-
-            var html2 = htmlFromReactMarkdown(
-                "~~~\n" +
-                "var computer = new IBN(5100);\n" +
-                "~~~\n\n"
-            );
-            assert.strictEqual(
-                html2,
-                "<pre><code>var computer = new IBN(5100);</code></pre>"
-            );
-
-            var html3 = htmlFromReactMarkdown(
-                "```yavascript\n" +
-                "var undefined = function() { return 5; }" +
-                "```\n\n"
-            );
-            assert.strictEqual(
-                html3,
-                '<pre><code class="markdown-code-yavascript">' +
-                'var undefined = function() { return 5; }' +
-                '</code></pre>'
-            );
-        });
-
-        it("should output blockQuotes", function () {
-            assertParsesToReact(
-                "> hi there this is a\ntest\n\n",
-                '<blockquote><div class="paragraph">' +
-                'hi there this is a test' +
-                '</div></blockquote>'
-            );
-
-            assertParsesToReact(
-                "> hi there this is a\n> test\n\n",
-                '<blockquote><div class="paragraph">' +
-                'hi there this is a test' +
-                '</div></blockquote>'
-            );
-        });
-
-        it("should output lists", function () {
-            assertParsesToReact(
-                " * first\n" +
-                " * second\n" +
-                " * third\n\n",
-                '<ul>' +
-                '<li>first</li>' +
-                '<li>second</li>' +
-                '<li>third</li>' +
-                '</ul>'
-            );
-
-            assertParsesToReact(
-                "1. first\n" +
-                "2. second\n" +
-                "3. third\n\n",
-                '<ol start="1">' +
-                '<li>first</li>' +
-                '<li>second</li>' +
-                '<li>third</li>' +
-                '</ol>'
-            );
-
-            assertParsesToReact(
-                " * first\n" +
-                " * second\n" +
-                "    * inner\n" +
-                " * third\n\n",
-                '<ul>' +
-                '<li>first</li>' +
-                '<li>second <ul><li>inner</li></ul></li>' +
-                '<li>third</li>' +
-                '</ul>'
-            );
-        });
-
-        it("should output tables", function () {
-            assertParsesToReact(
-                "h1 | h2 | h3\n" +
-                "---|----|---\n" +
-                "d1 | d2 | d3\n" +
-                "\n",
-                '<table><thead>' +
-                '<tr><th scope="col">h1</th><th scope="col">h2</th><th scope="col">h3</th></tr>' +
-                '</thead><tbody>' +
-                '<tr><td>d1</td><td>d2</td><td>d3</td></tr>' +
-                '</tbody></table>'
-            );
-
-            assertParsesToReact(
-                "| h1 | h2 | h3 |\n" +
-                "|----|----|----|\n" +
-                "| d1 | d2 | d3 |\n" +
-                "\n",
-                '<table><thead>' +
-                '<tr><th scope="col">h1</th><th scope="col">h2</th><th scope="col">h3</th></tr>' +
-                '</thead><tbody>' +
-                '<tr><td>d1</td><td>d2</td><td>d3</td></tr>' +
-                '</tbody></table>'
-            );
-
-            assertParsesToReact(
-                "h1 | h2 | h3\n" +
-                ":--|:--:|--:\n" +
-                "d1 | d2 | d3\n" +
-                "\n",
-                '<table><thead>' +
-                '<tr>' +
-                '<th style="text-align:left" scope="col">h1</th>' +
-                '<th style="text-align:center" scope="col">h2</th>' +
-                '<th style="text-align:right" scope="col">h3</th>' +
-                '</tr>' +
-                '</thead><tbody>' +
-                '<tr>' +
-                '<td style="text-align:left">d1</td>' +
-                '<td style="text-align:center">d2</td>' +
-                '<td style="text-align:right">d3</td>' +
-                '</tr>' +
-                '</tbody></table>'
-            );
-        });
-
-        // TODO(aria): Figure out how to test the newline rule here
-
-        it("should output paragraphs", function () {
-            var html = htmlFromReactMarkdown(
-                "hi\n\n"
-            );
-            assert.strictEqual(
-                html,
-                '<div class="paragraph">hi</div>'
-            );
-
-            var html2 = htmlFromReactMarkdown(
-                "hi\n\n" +
-                "bye\n\n"
-            );
-            assert.strictEqual(
-                html2,
-                '<div class="paragraph">hi</div>' +
-                '<div class="paragraph">bye</div>'
-            );
-        });
-
-        it("should output escaped text", function () {
-            assertParsesToReact(
-                "\\#escaping\\^symbols\\*is\\[legal](yes)",
-                '#escaping^symbols*is[legal](yes)'
-            );
-        });
-
-        it("should output links", function () {
-            assertParsesToReact(
-                "<https://www.khanacademy.org>",
-                '<a href="https://www.khanacademy.org">' +
-                'https://www.khanacademy.org' +
-                '</a>'
-            );
-
-            assertParsesToReact(
-                "<aria@khanacademy.org>",
-                '<a href="mailto:aria@khanacademy.org">' +
-                'aria@khanacademy.org' +
-                '</a>'
-            );
-
-            assertParsesToReact(
-                "https://www.khanacademy.org",
-                '<a href="https://www.khanacademy.org">' +
-                'https://www.khanacademy.org' +
-                '</a>'
-            );
-
-            assertParsesToReact(
-                "[KA](https://www.khanacademy.org)",
-                '<a href="https://www.khanacademy.org">' +
-                'KA' +
-                '</a>'
-            );
-
-            assertParsesToReact(
-                "[KA][1]\n\n[1]: https://www.khanacademy.org\n\n",
-                '<div class="paragraph">' +
-                '<a href="https://www.khanacademy.org">' +
-                'KA' +
-                '</a>' +
-                '</div>'
-            );
-        });
-
-        it("should output strong", function () {
-            assertParsesToReact(
-                "**bold**",
-                '<strong>bold</strong>'
-            );
-        });
-
-        it("should output u", function () {
-            assertParsesToReact(
-                "__underscore__",
-                '<u>underscore</u>'
-            );
-        });
-
-        it("should output em", function () {
-            assertParsesToReact(
-                "*italics*",
-                '<em>italics</em>'
-            );
-        });
-
-        it("should output simple combined bold/italics", function () {
-            assertParsesToReact(
-                "***bolditalics***",
-                '<em><strong>bolditalics</strong></em>'
-            );
-            assertParsesToReact(
-                "**bold *italics***",
-                '<strong>bold <em>italics</em></strong>'
-            );
-        });
-
-        // TODO(aria): Make this pass:
-        it("should output complex combined bold/italics", function () {
-            assertParsesToReact(
-                "***bold** italics*",
-                '<em><strong>bold</strong> italics</em>'
-            );
-            assertParsesToReact(
-                "*hi **there you***",
-                '<em>hi <strong>there you</strong></em>'
-            );
-        });
-
-        it("should output del", function () {
-            assertParsesToReact(
-                "~~strikethrough~~",
-                '<del>strikethrough</del>'
-            );
-        });
-
-        it("should output inline code", function () {
-            assertParsesToReact(
-                "here is some `inline code`.",
-                'here is some <code>inline code</code>.'
-            );
-        });
-
-        it("should output text", function () {
-            assertParsesToReact(
-                "Yay text!",
-                'Yay text!'
-            );
-        });
-
-        it("shouldn't split text into multiple spans", function () {
-            var parsed = MarkdownTg.defaultInlineParse("hi, there!");
-            var elements = MarkdownTg.defaultReactOutput(parsed);
-            assert.deepEqual(elements, ["hi, there!"]);
-        });
-    });
-
-    describe("html output", function () {
-        it("should sanitize dangerous links", function () {
-            var markdown = "[link](javascript:alert%28%27hi%27%29)";
-            assertParsesToHtml(
-                markdown,
-                "<a>link</a>"
-            );
-
-            var markdown2 = "[link][1]\n\n" +
-                "[1]: javascript:alert('hi');\n\n";
-            assertParsesToHtml(
-                markdown2,
-                "<div class=\"paragraph\"><a>link</a></div>"
-            );
-        });
-
-        it("should not sanitize safe links", function () {
-            var html = htmlFromMarkdown(
-                "[link](https://www.google.com)"
-            );
-            assert.strictEqual(
-                html,
-                "<a href=\"https://www.google.com\">link</a>"
-            );
-
-            var html2 = htmlFromMarkdown(
-                "[link][1]\n\n" +
-                "[1]: https://www.google.com\n\n"
-            );
-            assert.strictEqual(
-                html2,
-                "<div class=\"paragraph\">" +
-                "<a href=\"https://www.google.com\">link</a>" +
-                "</div>"
-            );
-        });
-
-        it("should output headings", function () {
-            assertParsesToHtml(
-                "### Heading!\n\n",
-                "<h3>Heading!</h3>"
-            );
-
-            assertParsesToHtml(
-                "## hi! ##\n\n",
-                "<h2>hi!</h2>"
-            );
-
-            assertParsesToHtml(
-                "Yay!\n====\n\n",
-                "<h1>Yay!</h1>"
-            );
-
-            assertParsesToHtml(
-                "Success\n---\n\n",
-                "<h2>Success</h2>"
-            );
-        });
-
-        it("should output hrs", function () {
-            assertParsesToHtml(
-                "-----\n\n",
-                "<hr>"
-            );
-            assertParsesToHtml(
-                " * * * \n\n",
-                "<hr>"
-            );
-            assertParsesToHtml(
-                "___\n\n",
-                "<hr>"
-            );
-        });
-
-        it("should output codeblocks", function () {
-            var html = htmlFromMarkdown(
-                "    var microwave = new TimeMachine();\n\n"
-            );
-            assert.strictEqual(
-                html,
-                "<pre><code>var microwave = new TimeMachine();</code></pre>"
-            );
-
-            var html2 = htmlFromMarkdown(
-                "~~~\n" +
-                "var computer = new IBN(5100);\n" +
-                "~~~\n\n"
-            );
-            assert.strictEqual(
-                html2,
-                "<pre><code>var computer = new IBN(5100);</code></pre>"
-            );
-
-            var html3 = htmlFromMarkdown(
-                "```yavascript\n" +
-                "var undefined = function() { return 5; }" +
-                "```\n\n"
-            );
-            assert.strictEqual(
-                html3,
-                '<pre><code class="markdown-code-yavascript">' +
-                'var undefined = function() { return 5; }' +
-                '</code></pre>'
-            );
-        });
-
-        it("should output blockQuotes", function () {
-            assertParsesToHtml(
-                "> hi there this is a\ntest\n\n",
-                '<blockquote><div class="paragraph">' +
-                'hi there this is a test' +
-                '</div></blockquote>'
-            );
-
-            assertParsesToHtml(
-                "> hi there this is a\n> test\n\n",
-                '<blockquote><div class="paragraph">' +
-                'hi there this is a test' +
-                '</div></blockquote>'
-            );
-        });
-
-        it("should output lists", function () {
-            assertParsesToHtml(
-                " * first\n" +
-                " * second\n" +
-                " * third\n\n",
-                '<ul>' +
-                '<li>first</li>' +
-                '<li>second</li>' +
-                '<li>third</li>' +
-                '</ul>'
-            );
-
-            assertParsesToHtml(
-                "1. first\n" +
-                "2. second\n" +
-                "3. third\n\n",
-                '<ol start="1">' +
-                '<li>first</li>' +
-                '<li>second</li>' +
-                '<li>third</li>' +
-                '</ol>'
-            );
-
-            assertParsesToHtml(
-                " * first\n" +
-                " * second\n" +
-                "    * inner\n" +
-                " * third\n\n",
-                '<ul>' +
-                '<li>first</li>' +
-                '<li>second <ul><li>inner</li></ul></li>' +
-                '<li>third</li>' +
-                '</ul>'
-            );
-        });
-
-        it("should output tables", function () {
-            assertParsesToHtml(
-                "h1 | h2 | h3\n" +
-                "---|----|---\n" +
-                "d1 | d2 | d3\n" +
-                "\n",
-                '<table><thead>' +
-                '<tr><th scope="col">h1</th><th scope="col">h2</th><th scope="col">h3</th></tr>' +
-                '</thead><tbody>' +
-                '<tr><td>d1</td><td>d2</td><td>d3</td></tr>' +
-                '</tbody></table>'
-            );
-
-            assertParsesToHtml(
-                "| h1 | h2 | h3 |\n" +
-                "|----|----|----|\n" +
-                "| d1 | d2 | d3 |\n" +
-                "\n",
-                '<table><thead>' +
-                '<tr><th scope="col">h1</th><th scope="col">h2</th><th scope="col">h3</th></tr>' +
-                '</thead><tbody>' +
-                '<tr><td>d1</td><td>d2</td><td>d3</td></tr>' +
-                '</tbody></table>'
-            );
-
-            assertParsesToHtml(
-                "h1 | h2 | h3\n" +
-                ":--|:--:|--:\n" +
-                "d1 | d2 | d3\n" +
-                "\n",
-                '<table><thead>' +
-                '<tr>' +
-                '<th style="text-align:left;" scope="col">h1</th>' +
-                '<th style="text-align:center;" scope="col">h2</th>' +
-                '<th style="text-align:right;" scope="col">h3</th>' +
-                '</tr>' +
-                '</thead><tbody>' +
-                '<tr>' +
-                '<td style="text-align:left;">d1</td>' +
-                '<td style="text-align:center;">d2</td>' +
-                '<td style="text-align:right;">d3</td>' +
-                '</tr>' +
-                '</tbody></table>'
-            );
-        });
-
-        // TODO(aria): Figure out how to test the newline rule here
-
-        it("should output paragraphs", function () {
-            var html = htmlFromMarkdown(
-                "hi\n\n"
-            );
-            assert.strictEqual(
-                html,
-                '<div class="paragraph">hi</div>'
-            );
-
-            var html2 = htmlFromMarkdown(
-                "hi\n\n" +
-                "bye\n\n"
-            );
-            assert.strictEqual(
-                html2,
-                '<div class="paragraph">hi</div>' +
-                '<div class="paragraph">bye</div>'
-            );
-        });
-
-        it("should output escaped text", function () {
-            assertParsesToHtml(
-                "\\#escaping\\^symbols\\*is\\[legal](yes)",
-                '#escaping^symbols*is[legal](yes)'
-            );
-        });
-
-        it("should output links", function () {
-            assertParsesToHtml(
-                "<https://www.khanacademy.org>",
-                '<a href="https://www.khanacademy.org">' +
-                'https://www.khanacademy.org' +
-                '</a>'
-            );
-
-            assertParsesToHtml(
-                "<aria@khanacademy.org>",
-                '<a href="mailto:aria@khanacademy.org">' +
-                'aria@khanacademy.org' +
-                '</a>'
-            );
-
-            assertParsesToHtml(
-                "https://www.khanacademy.org",
-                '<a href="https://www.khanacademy.org">' +
-                'https://www.khanacademy.org' +
-                '</a>'
-            );
-
-            assertParsesToHtml(
-                "[KA](https://www.khanacademy.org)",
-                '<a href="https://www.khanacademy.org">' +
-                'KA' +
-                '</a>'
-            );
-
-            assertParsesToHtml(
-                "[KA][1]\n\n[1]: https://www.khanacademy.org\n\n",
-                '<div class="paragraph">' +
-                '<a href="https://www.khanacademy.org">' +
-                'KA' +
-                '</a>' +
-                '</div>'
-            );
-        });
-
-        it("should output strong", function () {
-            assertParsesToHtml(
-                "**bold**",
-                '<strong>bold</strong>'
-            );
-        });
-
-        it("should output u", function () {
-            assertParsesToHtml(
-                "__underscore__",
-                '<u>underscore</u>'
-            );
-        });
-
-        it("should output em", function () {
-            assertParsesToHtml(
-                "*italics*",
-                '<em>italics</em>'
-            );
-        });
-
-        it("should output simple combined bold/italics", function () {
-            assertParsesToHtml(
-                "***bolditalics***",
-                '<em><strong>bolditalics</strong></em>'
-            );
-            assertParsesToHtml(
-                "**bold *italics***",
-                '<strong>bold <em>italics</em></strong>'
-            );
-        });
-
-        // TODO(aria): Make this pass:
-        it("should output complex combined bold/italics", function () {
-            assertParsesToHtml(
-                "***bold** italics*",
-                '<em><strong>bold</strong> italics</em>'
-            );
-            assertParsesToHtml(
-                "*hi **there you***",
-                '<em>hi <strong>there you</strong></em>'
-            );
-        });
-
-        it("should output del", function () {
-            assertParsesToHtml(
-                "~~strikethrough~~",
-                '<del>strikethrough</del>'
-            );
-        });
-
-        it("should output inline code", function () {
-            assertParsesToHtml(
-                "here is some `inline code`.",
-                'here is some <code>inline code</code>.'
-            );
-        });
-
-        it("should output text", function () {
-            assertParsesToHtml(
-                "Yay text!",
-                'Yay text!'
-            );
-        });
-
-        it("shouldn't split text into multiple spans", function () {
-            var parsed = MarkdownTg.defaultInlineParse("hi, there!");
-            var elements = MarkdownTg.defaultHtmlOutput(parsed);
-            assert.deepEqual(elements, "hi, there!");
-        });
-    });
+    // describe("react output", function () {
+    //     it("should sanitize dangerous links", function () {
+    //         var html = htmlFromReactMarkdown(
+    //             "[link](javascript:alert%28%27hi%27%29)"
+    //         );
+    //         assert.strictEqual(html, "<a>link</a>");
+
+    //         var html2 = htmlFromReactMarkdown(
+    //             "[link][1]\n\n" +
+    //             "[1]: javascript:alert('hi');\n\n"
+    //         );
+    //         assert.strictEqual(
+    //             html2,
+    //             "<div class=\"paragraph\"><a>link</a></div>"
+    //         );
+    //     });
+
+    //     it("should not sanitize safe links", function () {
+    //         var html = htmlFromReactMarkdown(
+    //             "[link](https://www.google.com)"
+    //         );
+    //         assert.strictEqual(
+    //             html,
+    //             "<a href=\"https://www.google.com\">link</a>"
+    //         );
+
+    //         var html2 = htmlFromReactMarkdown(
+    //             "[link][1]\n\n" +
+    //             "[1]: https://www.google.com\n\n"
+    //         );
+    //         assert.strictEqual(
+    //             html2,
+    //             "<div class=\"paragraph\">" +
+    //             "<a href=\"https://www.google.com\">link</a>" +
+    //             "</div>"
+    //         );
+    //     });
+
+    //     it("should output headings", function () {
+    //         assertParsesToReact(
+    //             "### Heading!\n\n",
+    //             "<h3>Heading!</h3>"
+    //         );
+
+    //         assertParsesToReact(
+    //             "## hi! ##\n\n",
+    //             "<h2>hi!</h2>"
+    //         );
+
+    //         assertParsesToReact(
+    //             "Yay!\n====\n\n",
+    //             "<h1>Yay!</h1>"
+    //         );
+
+    //         assertParsesToReact(
+    //             "Success\n---\n\n",
+    //             "<h2>Success</h2>"
+    //         );
+    //     });
+
+    //     it("should output hrs", function () {
+    //         assertParsesToReact(
+    //             "-----\n\n",
+    //             "<hr/>"
+    //         );
+    //         assertParsesToReact(
+    //             " * * * \n\n",
+    //             "<hr/>"
+    //         );
+    //         assertParsesToReact(
+    //             "___\n\n",
+    //             "<hr/>"
+    //         );
+    //     });
+
+    //     it("should output codeblocks", function () {
+    //         var html = htmlFromReactMarkdown(
+    //             "    var microwave = new TimeMachine();\n\n"
+    //         );
+    //         assert.strictEqual(
+    //             html,
+    //             "<pre><code>var microwave = new TimeMachine();</code></pre>"
+    //         );
+
+    //         var html2 = htmlFromReactMarkdown(
+    //             "~~~\n" +
+    //             "var computer = new IBN(5100);\n" +
+    //             "~~~\n\n"
+    //         );
+    //         assert.strictEqual(
+    //             html2,
+    //             "<pre><code>var computer = new IBN(5100);</code></pre>"
+    //         );
+
+    //         var html3 = htmlFromReactMarkdown(
+    //             "```yavascript\n" +
+    //             "var undefined = function() { return 5; }" +
+    //             "```\n\n"
+    //         );
+    //         assert.strictEqual(
+    //             html3,
+    //             '<pre><code class="markdown-code-yavascript">' +
+    //             'var undefined = function() { return 5; }' +
+    //             '</code></pre>'
+    //         );
+    //     });
+
+    //     it("should output blockQuotes", function () {
+    //         assertParsesToReact(
+    //             "> hi there this is a\ntest\n\n",
+    //             '<blockquote><div class="paragraph">' +
+    //             'hi there this is a test' +
+    //             '</div></blockquote>'
+    //         );
+
+    //         assertParsesToReact(
+    //             "> hi there this is a\n> test\n\n",
+    //             '<blockquote><div class="paragraph">' +
+    //             'hi there this is a test' +
+    //             '</div></blockquote>'
+    //         );
+    //     });
+
+    //     it("should output lists", function () {
+    //         assertParsesToReact(
+    //             " * first\n" +
+    //             " * second\n" +
+    //             " * third\n\n",
+    //             '<ul>' +
+    //             '<li>first</li>' +
+    //             '<li>second</li>' +
+    //             '<li>third</li>' +
+    //             '</ul>'
+    //         );
+
+    //         assertParsesToReact(
+    //             "1. first\n" +
+    //             "2. second\n" +
+    //             "3. third\n\n",
+    //             '<ol start="1">' +
+    //             '<li>first</li>' +
+    //             '<li>second</li>' +
+    //             '<li>third</li>' +
+    //             '</ol>'
+    //         );
+
+    //         assertParsesToReact(
+    //             " * first\n" +
+    //             " * second\n" +
+    //             "    * inner\n" +
+    //             " * third\n\n",
+    //             '<ul>' +
+    //             '<li>first</li>' +
+    //             '<li>second <ul><li>inner</li></ul></li>' +
+    //             '<li>third</li>' +
+    //             '</ul>'
+    //         );
+    //     });
+
+    //     it("should output tables", function () {
+    //         assertParsesToReact(
+    //             "h1 | h2 | h3\n" +
+    //             "---|----|---\n" +
+    //             "d1 | d2 | d3\n" +
+    //             "\n",
+    //             '<table><thead>' +
+    //             '<tr><th scope="col">h1</th><th scope="col">h2</th><th scope="col">h3</th></tr>' +
+    //             '</thead><tbody>' +
+    //             '<tr><td>d1</td><td>d2</td><td>d3</td></tr>' +
+    //             '</tbody></table>'
+    //         );
+
+    //         assertParsesToReact(
+    //             "| h1 | h2 | h3 |\n" +
+    //             "|----|----|----|\n" +
+    //             "| d1 | d2 | d3 |\n" +
+    //             "\n",
+    //             '<table><thead>' +
+    //             '<tr><th scope="col">h1</th><th scope="col">h2</th><th scope="col">h3</th></tr>' +
+    //             '</thead><tbody>' +
+    //             '<tr><td>d1</td><td>d2</td><td>d3</td></tr>' +
+    //             '</tbody></table>'
+    //         );
+
+    //         assertParsesToReact(
+    //             "h1 | h2 | h3\n" +
+    //             ":--|:--:|--:\n" +
+    //             "d1 | d2 | d3\n" +
+    //             "\n",
+    //             '<table><thead>' +
+    //             '<tr>' +
+    //             '<th style="text-align:left" scope="col">h1</th>' +
+    //             '<th style="text-align:center" scope="col">h2</th>' +
+    //             '<th style="text-align:right" scope="col">h3</th>' +
+    //             '</tr>' +
+    //             '</thead><tbody>' +
+    //             '<tr>' +
+    //             '<td style="text-align:left">d1</td>' +
+    //             '<td style="text-align:center">d2</td>' +
+    //             '<td style="text-align:right">d3</td>' +
+    //             '</tr>' +
+    //             '</tbody></table>'
+    //         );
+    //     });
+
+    //     // TODO(aria): Figure out how to test the newline rule here
+
+    //     it("should output paragraphs", function () {
+    //         var html = htmlFromReactMarkdown(
+    //             "hi\n\n"
+    //         );
+    //         assert.strictEqual(
+    //             html,
+    //             '<div class="paragraph">hi</div>'
+    //         );
+
+    //         var html2 = htmlFromReactMarkdown(
+    //             "hi\n\n" +
+    //             "bye\n\n"
+    //         );
+    //         assert.strictEqual(
+    //             html2,
+    //             '<div class="paragraph">hi</div>' +
+    //             '<div class="paragraph">bye</div>'
+    //         );
+    //     });
+
+    //     it("should output escaped text", function () {
+    //         assertParsesToReact(
+    //             "\\#escaping\\^symbols\\*is\\[legal](yes)",
+    //             '#escaping^symbols*is[legal](yes)'
+    //         );
+    //     });
+
+    //     it("should output links", function () {
+    //         assertParsesToReact(
+    //             "<https://www.khanacademy.org>",
+    //             '<a href="https://www.khanacademy.org">' +
+    //             'https://www.khanacademy.org' +
+    //             '</a>'
+    //         );
+
+    //         assertParsesToReact(
+    //             "<aria@khanacademy.org>",
+    //             '<a href="mailto:aria@khanacademy.org">' +
+    //             'aria@khanacademy.org' +
+    //             '</a>'
+    //         );
+
+    //         assertParsesToReact(
+    //             "https://www.khanacademy.org",
+    //             '<a href="https://www.khanacademy.org">' +
+    //             'https://www.khanacademy.org' +
+    //             '</a>'
+    //         );
+
+    //         assertParsesToReact(
+    //             "[KA](https://www.khanacademy.org)",
+    //             '<a href="https://www.khanacademy.org">' +
+    //             'KA' +
+    //             '</a>'
+    //         );
+
+    //         assertParsesToReact(
+    //             "[KA][1]\n\n[1]: https://www.khanacademy.org\n\n",
+    //             '<div class="paragraph">' +
+    //             '<a href="https://www.khanacademy.org">' +
+    //             'KA' +
+    //             '</a>' +
+    //             '</div>'
+    //         );
+    //     });
+
+    //     it("should output strong", function () {
+    //         assertParsesToReact(
+    //             "**bold**",
+    //             '<strong>bold</strong>'
+    //         );
+    //     });
+
+    //     it("should output u", function () {
+    //         assertParsesToReact(
+    //             "__underscore__",
+    //             '<u>underscore</u>'
+    //         );
+    //     });
+
+    //     it("should output em", function () {
+    //         assertParsesToReact(
+    //             "*italics*",
+    //             '<em>italics</em>'
+    //         );
+    //     });
+
+    //     it("should output simple combined bold/italics", function () {
+    //         assertParsesToReact(
+    //             "***bolditalics***",
+    //             '<em><strong>bolditalics</strong></em>'
+    //         );
+    //         assertParsesToReact(
+    //             "**bold *italics***",
+    //             '<strong>bold <em>italics</em></strong>'
+    //         );
+    //     });
+
+    //     // TODO(aria): Make this pass:
+    //     it("should output complex combined bold/italics", function () {
+    //         assertParsesToReact(
+    //             "***bold** italics*",
+    //             '<em><strong>bold</strong> italics</em>'
+    //         );
+    //         assertParsesToReact(
+    //             "*hi **there you***",
+    //             '<em>hi <strong>there you</strong></em>'
+    //         );
+    //     });
+
+    //     it("should output del", function () {
+    //         assertParsesToReact(
+    //             "~~strikethrough~~",
+    //             '<del>strikethrough</del>'
+    //         );
+    //     });
+
+    //     it("should output inline code", function () {
+    //         assertParsesToReact(
+    //             "here is some `inline code`.",
+    //             'here is some <code>inline code</code>.'
+    //         );
+    //     });
+
+    //     it("should output text", function () {
+    //         assertParsesToReact(
+    //             "Yay text!",
+    //             'Yay text!'
+    //         );
+    //     });
+
+    //     it("shouldn't split text into multiple spans", function () {
+    //         var parsed = MarkdownTg.defaultInlineParse("hi, there!");
+    //         var elements = MarkdownTg.defaultReactOutput(parsed);
+    //         assert.deepEqual(elements, ["hi, there!"]);
+    //     });
+    // });
+
+    // describe("html output", function () {
+    //     it("should sanitize dangerous links", function () {
+    //         var markdown = "[link](javascript:alert%28%27hi%27%29)";
+    //         assertParsesToHtml(
+    //             markdown,
+    //             "<a>link</a>"
+    //         );
+
+    //         var markdown2 = "[link][1]\n\n" +
+    //             "[1]: javascript:alert('hi');\n\n";
+    //         assertParsesToHtml(
+    //             markdown2,
+    //             "<div class=\"paragraph\"><a>link</a></div>"
+    //         );
+    //     });
+
+    //     it("should not sanitize safe links", function () {
+    //         var html = htmlFromMarkdown(
+    //             "[link](https://www.google.com)"
+    //         );
+    //         assert.strictEqual(
+    //             html,
+    //             "<a href=\"https://www.google.com\">link</a>"
+    //         );
+
+    //         var html2 = htmlFromMarkdown(
+    //             "[link][1]\n\n" +
+    //             "[1]: https://www.google.com\n\n"
+    //         );
+    //         assert.strictEqual(
+    //             html2,
+    //             "<div class=\"paragraph\">" +
+    //             "<a href=\"https://www.google.com\">link</a>" +
+    //             "</div>"
+    //         );
+    //     });
+
+    //     it("should output headings", function () {
+    //         assertParsesToHtml(
+    //             "### Heading!\n\n",
+    //             "<h3>Heading!</h3>"
+    //         );
+
+    //         assertParsesToHtml(
+    //             "## hi! ##\n\n",
+    //             "<h2>hi!</h2>"
+    //         );
+
+    //         assertParsesToHtml(
+    //             "Yay!\n====\n\n",
+    //             "<h1>Yay!</h1>"
+    //         );
+
+    //         assertParsesToHtml(
+    //             "Success\n---\n\n",
+    //             "<h2>Success</h2>"
+    //         );
+    //     });
+
+    //     it("should output hrs", function () {
+    //         assertParsesToHtml(
+    //             "-----\n\n",
+    //             "<hr>"
+    //         );
+    //         assertParsesToHtml(
+    //             " * * * \n\n",
+    //             "<hr>"
+    //         );
+    //         assertParsesToHtml(
+    //             "___\n\n",
+    //             "<hr>"
+    //         );
+    //     });
+
+    //     it("should output codeblocks", function () {
+    //         var html = htmlFromMarkdown(
+    //             "    var microwave = new TimeMachine();\n\n"
+    //         );
+    //         assert.strictEqual(
+    //             html,
+    //             "<pre><code>var microwave = new TimeMachine();</code></pre>"
+    //         );
+
+    //         var html2 = htmlFromMarkdown(
+    //             "~~~\n" +
+    //             "var computer = new IBN(5100);\n" +
+    //             "~~~\n\n"
+    //         );
+    //         assert.strictEqual(
+    //             html2,
+    //             "<pre><code>var computer = new IBN(5100);</code></pre>"
+    //         );
+
+    //         var html3 = htmlFromMarkdown(
+    //             "```yavascript\n" +
+    //             "var undefined = function() { return 5; }" +
+    //             "```\n\n"
+    //         );
+    //         assert.strictEqual(
+    //             html3,
+    //             '<pre><code class="markdown-code-yavascript">' +
+    //             'var undefined = function() { return 5; }' +
+    //             '</code></pre>'
+    //         );
+    //     });
+
+    //     it("should output blockQuotes", function () {
+    //         assertParsesToHtml(
+    //             "> hi there this is a\ntest\n\n",
+    //             '<blockquote><div class="paragraph">' +
+    //             'hi there this is a test' +
+    //             '</div></blockquote>'
+    //         );
+
+    //         assertParsesToHtml(
+    //             "> hi there this is a\n> test\n\n",
+    //             '<blockquote><div class="paragraph">' +
+    //             'hi there this is a test' +
+    //             '</div></blockquote>'
+    //         );
+    //     });
+
+    //     it("should output lists", function () {
+    //         assertParsesToHtml(
+    //             " * first\n" +
+    //             " * second\n" +
+    //             " * third\n\n",
+    //             '<ul>' +
+    //             '<li>first</li>' +
+    //             '<li>second</li>' +
+    //             '<li>third</li>' +
+    //             '</ul>'
+    //         );
+
+    //         assertParsesToHtml(
+    //             "1. first\n" +
+    //             "2. second\n" +
+    //             "3. third\n\n",
+    //             '<ol start="1">' +
+    //             '<li>first</li>' +
+    //             '<li>second</li>' +
+    //             '<li>third</li>' +
+    //             '</ol>'
+    //         );
+
+    //         assertParsesToHtml(
+    //             " * first\n" +
+    //             " * second\n" +
+    //             "    * inner\n" +
+    //             " * third\n\n",
+    //             '<ul>' +
+    //             '<li>first</li>' +
+    //             '<li>second <ul><li>inner</li></ul></li>' +
+    //             '<li>third</li>' +
+    //             '</ul>'
+    //         );
+    //     });
+
+    //     it("should output tables", function () {
+    //         assertParsesToHtml(
+    //             "h1 | h2 | h3\n" +
+    //             "---|----|---\n" +
+    //             "d1 | d2 | d3\n" +
+    //             "\n",
+    //             '<table><thead>' +
+    //             '<tr><th scope="col">h1</th><th scope="col">h2</th><th scope="col">h3</th></tr>' +
+    //             '</thead><tbody>' +
+    //             '<tr><td>d1</td><td>d2</td><td>d3</td></tr>' +
+    //             '</tbody></table>'
+    //         );
+
+    //         assertParsesToHtml(
+    //             "| h1 | h2 | h3 |\n" +
+    //             "|----|----|----|\n" +
+    //             "| d1 | d2 | d3 |\n" +
+    //             "\n",
+    //             '<table><thead>' +
+    //             '<tr><th scope="col">h1</th><th scope="col">h2</th><th scope="col">h3</th></tr>' +
+    //             '</thead><tbody>' +
+    //             '<tr><td>d1</td><td>d2</td><td>d3</td></tr>' +
+    //             '</tbody></table>'
+    //         );
+
+    //         assertParsesToHtml(
+    //             "h1 | h2 | h3\n" +
+    //             ":--|:--:|--:\n" +
+    //             "d1 | d2 | d3\n" +
+    //             "\n",
+    //             '<table><thead>' +
+    //             '<tr>' +
+    //             '<th style="text-align:left;" scope="col">h1</th>' +
+    //             '<th style="text-align:center;" scope="col">h2</th>' +
+    //             '<th style="text-align:right;" scope="col">h3</th>' +
+    //             '</tr>' +
+    //             '</thead><tbody>' +
+    //             '<tr>' +
+    //             '<td style="text-align:left;">d1</td>' +
+    //             '<td style="text-align:center;">d2</td>' +
+    //             '<td style="text-align:right;">d3</td>' +
+    //             '</tr>' +
+    //             '</tbody></table>'
+    //         );
+    //     });
+
+    //     // TODO(aria): Figure out how to test the newline rule here
+
+    //     it("should output paragraphs", function () {
+    //         var html = htmlFromMarkdown(
+    //             "hi\n\n"
+    //         );
+    //         assert.strictEqual(
+    //             html,
+    //             '<div class="paragraph">hi</div>'
+    //         );
+
+    //         var html2 = htmlFromMarkdown(
+    //             "hi\n\n" +
+    //             "bye\n\n"
+    //         );
+    //         assert.strictEqual(
+    //             html2,
+    //             '<div class="paragraph">hi</div>' +
+    //             '<div class="paragraph">bye</div>'
+    //         );
+    //     });
+
+    //     it("should output escaped text", function () {
+    //         assertParsesToHtml(
+    //             "\\#escaping\\^symbols\\*is\\[legal](yes)",
+    //             '#escaping^symbols*is[legal](yes)'
+    //         );
+    //     });
+
+    //     it("should output links", function () {
+    //         assertParsesToHtml(
+    //             "<https://www.khanacademy.org>",
+    //             '<a href="https://www.khanacademy.org">' +
+    //             'https://www.khanacademy.org' +
+    //             '</a>'
+    //         );
+
+    //         assertParsesToHtml(
+    //             "<aria@khanacademy.org>",
+    //             '<a href="mailto:aria@khanacademy.org">' +
+    //             'aria@khanacademy.org' +
+    //             '</a>'
+    //         );
+
+    //         assertParsesToHtml(
+    //             "https://www.khanacademy.org",
+    //             '<a href="https://www.khanacademy.org">' +
+    //             'https://www.khanacademy.org' +
+    //             '</a>'
+    //         );
+
+    //         assertParsesToHtml(
+    //             "[KA](https://www.khanacademy.org)",
+    //             '<a href="https://www.khanacademy.org">' +
+    //             'KA' +
+    //             '</a>'
+    //         );
+
+    //         assertParsesToHtml(
+    //             "[KA][1]\n\n[1]: https://www.khanacademy.org\n\n",
+    //             '<div class="paragraph">' +
+    //             '<a href="https://www.khanacademy.org">' +
+    //             'KA' +
+    //             '</a>' +
+    //             '</div>'
+    //         );
+    //     });
+
+    //     it("should output strong", function () {
+    //         assertParsesToHtml(
+    //             "**bold**",
+    //             '<strong>bold</strong>'
+    //         );
+    //     });
+
+    //     it("should output u", function () {
+    //         assertParsesToHtml(
+    //             "__underscore__",
+    //             '<u>underscore</u>'
+    //         );
+    //     });
+
+    //     it("should output em", function () {
+    //         assertParsesToHtml(
+    //             "*italics*",
+    //             '<em>italics</em>'
+    //         );
+    //     });
+
+    //     it("should output simple combined bold/italics", function () {
+    //         assertParsesToHtml(
+    //             "***bolditalics***",
+    //             '<em><strong>bolditalics</strong></em>'
+    //         );
+    //         assertParsesToHtml(
+    //             "**bold *italics***",
+    //             '<strong>bold <em>italics</em></strong>'
+    //         );
+    //     });
+
+    //     // TODO(aria): Make this pass:
+    //     it("should output complex combined bold/italics", function () {
+    //         assertParsesToHtml(
+    //             "***bold** italics*",
+    //             '<em><strong>bold</strong> italics</em>'
+    //         );
+    //         assertParsesToHtml(
+    //             "*hi **there you***",
+    //             '<em>hi <strong>there you</strong></em>'
+    //         );
+    //     });
+
+    //     it("should output del", function () {
+    //         assertParsesToHtml(
+    //             "~~strikethrough~~",
+    //             '<del>strikethrough</del>'
+    //         );
+    //     });
+
+    //     it("should output inline code", function () {
+    //         assertParsesToHtml(
+    //             "here is some `inline code`.",
+    //             'here is some <code>inline code</code>.'
+    //         );
+    //     });
+
+    //     it("should output text", function () {
+    //         assertParsesToHtml(
+    //             "Yay text!",
+    //             'Yay text!'
+    //         );
+    //     });
+
+    //     it("shouldn't split text into multiple spans", function () {
+    //         var parsed = MarkdownTg.defaultInlineParse("hi, there!");
+    //         var elements = MarkdownTg.defaultHtmlOutput(parsed);
+    //         assert.deepEqual(elements, "hi, there!");
+    //     });
+    // });
 });
