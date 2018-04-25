@@ -1,6 +1,6 @@
 {
   "name": "markdown-tg",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Javascript Telegram markdown parsing, made simple",
   "main": "markdown-tg.js",
   "scripts": {
