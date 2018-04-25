@@ -1,0 +1,44 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Markdown-tg.js</title>
+    <script src="markdown-tg.min.js"></script>
+</head>
+  
+<body>
+
+<textarea id="input" rows="10" cols="100">
+*bold text*
+_italic text_
+[inline URL](http://www.example.com/)
+[inline mention of a user](tg://user?id=123456789)
+`inline fixed-width code`
+```block_language
+pre-formatted fixed-width code block
+```
+</textarea>
+<br />
+<button onclick="javascrpt:render()">Render</button>
+<br />
+<div id="output"></div>
+<script>
+    // full render constructor
+    function render() {
+        var input = document.getElementById('input').value;
+        var rules = markdownTg.defaultRules;
+        var parse = markdownTg.defaultInlineParse;
+        var htmlOutput = markdownTg.htmlFor(markdownTg.ruleOutput(rules, 'html'));
+        var output = document.getElementById("output");
+        var syntaxTree = parse(input);
+        output.innerHTML = htmlOutput(syntaxTree).replace(/(?:\r\n|\r|\n)/g, '<br />');
+        return htmlOutput(syntaxTree);
+    };
+    render();
+
+    // simpliest render with all defaults
+    function simpleRender(text){
+        return markdownTg.defaultHtmlOutput(markdownTg.defaultParse(text));
+    }
+</script>
+</body>
+</html>
