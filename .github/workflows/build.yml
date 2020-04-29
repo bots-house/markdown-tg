@@ -14,7 +14,7 @@ jobs:
         node-version: '12.x'
         registry-url: 'https://npm.pkg.github.com'
         scope: '@bots-house' # Defaults to the user or organization that owns the workflow file
-    - run: npm installs
+    - run: npm install
     - run: npm publish
       env:
         NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
