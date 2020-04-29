@@ -1,5 +1,5 @@
 {
-  "name": "markdown-tg",
+  "name": "@bots-house/markdown-tg",
   "version": "0.2.0",
   "description": "Javascript Telegram markdown parsing, made simple",
   "main": "markdown-tg.js",
