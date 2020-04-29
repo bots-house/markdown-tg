@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/xen/markdown-tg.git"
+    "url": "https://github.com/bots-house/markdown-tg.git"
   },
   "keywords": [
     "markdown",
@@ -24,9 +24,9 @@
   "author": "Mikhail Kashkin",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/xen/markdown-tg/issues"
+    "url": "https://github.com/bots-house/markdown-tg/issues"
   },
-  "homepage": "https://github.com/xen/markdown-tg",
+  "homepage": "https://github.com/bots-house/markdown-tg",
   "devDependencies": {
     "eslint-config-standard": "^11.0.0",
     "eslint-plugin-import": "^2.11.0",
